@@ -83,6 +83,7 @@ HRESULT Quad::Initialize()
 	}
 	pTexture_ = new Texture();
 	pTexture_->Load("dice.png");
+
 	return S_OK;
 	
 	
@@ -91,12 +92,12 @@ HRESULT Quad::Initialize()
 void Quad::Draw(XMMATRIX& worldMatrix)
 {
 	//コンスタントバッファに渡す情報
-	XMVECTOR position = { 0, 3, -10, 0 };	//カメラの位置
-	XMVECTOR target = { 0, 0, 0, 0 };	//カメラの焦点
-	                                                   //上はどの方向を基準にするか
-	XMMATRIX view = XMMatrixLookAtLH(position, target, XMVectorSet(0, 1, 0, 0));	//ビュー行列
-	                                                    //アスペクト比　　カメラの位置からどこまで描画するのか　なるべく離さないようにする
-	XMMATRIX proj = XMMatrixPerspectiveFovLH(XM_PIDIV4, 800.0f / 600.0f, 0.1f, 100.0f);//射影行列
+	//XMVECTOR position = { 0, 3, -10, 0 };	//カメラの位置
+	//XMVECTOR target = { 0, 0, 0, 0 };	//カメラの焦点
+	//                                                   //上はどの方向を基準にするか
+	//XMMATRIX view = XMMatrixLookAtLH(position, target, XMVectorSet(0, 1, 0, 0));	//ビュー行列
+	//                                                    //アスペクト比　　カメラの位置からどこまで描画するのか　なるべく離さないようにする
+	//XMMATRIX proj = XMMatrixPerspectiveFovLH(XM_PIDIV4, 800.0f / 600.0f, 0.1f, 100.0f);//射影行列
 
 	
 	D3D11_MAPPED_SUBRESOURCE pdata;
@@ -106,12 +107,15 @@ void Quad::Draw(XMMATRIX& worldMatrix)
 	
 	Direct3D::pContext->Map(pConstantBuffer_, 0, D3D11_MAP_WRITE_DISCARD, 0, &pdata);	// GPUからのデータアクセスを止める
 	memcpy_s(pdata.pData, pdata.RowPitch, (void*)(&cb), sizeof(cb));	// データを値を送る
-	//Direct3D::pContext->Unmap(pConstantBuffer_, 0);	//再開
+		//再開
 	
 	ID3D11SamplerState* pSampler = pTexture_->GetSampler();
 	Direct3D::pContext->PSSetSamplers(0, 1, &pSampler);
+	
 	ID3D11ShaderResourceView* pSRV = pTexture_->GetSRV();
+	
 	Direct3D::pContext->PSSetShaderResources(0, 1, &pSRV);
+	
 	Direct3D::pContext->Unmap(pConstantBuffer_, 0);
     
 	Direct3D::pContext->DrawIndexed(6, 0, 0);

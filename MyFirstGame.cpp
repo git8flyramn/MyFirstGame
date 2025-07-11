@@ -76,8 +76,10 @@ int APIENTRY wWinMain(_In_ HINSTANCE hInstance,
     HACCEL hAccelTable = LoadAccelerators(hInstance, MAKEINTRESOURCE(IDC_MYFIRSTGAME));
 
     MSG msg = {};
-   Quad* q = new Quad();
-   hr =  q->Initialize();
+   /*Quad* q = new Quad();
+   hr =  q->Initialize();*/
+   Dice* d = new Dice();
+   hr = d->Initialize();
    if (FAILED(hr))
    {
        return 0;
@@ -100,12 +102,12 @@ int APIENTRY wWinMain(_In_ HINSTANCE hInstance,
             Camera::Update();
             Direct3D::BeginDraw();
             XMMATRIX mat = XMMatrixRotationY(XMConvertToRadians(45));
-            q->Draw(mat);
+            d->Draw(mat);
             Direct3D::EndDraw();
             
     }
-    q->Release();
-    SAFE_DELETE(q);
+    d->Release();
+    SAFE_DELETE(d);
     //Direct3D::Release();
     
    

@@ -12,6 +12,7 @@ class Dice :
    public:
        Dice();
        ~Dice();
+	   void Update(VERTEX vertices);
 	   HRESULT Initialize();
 	   void Draw(DirectX::XMMATRIX& worldMatrix);
 	   void Release();

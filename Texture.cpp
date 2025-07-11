@@ -3,7 +3,7 @@
 #include <DirectXTex.h>
 #include <wincodec.h>
 #pragma comment(lib, "DirectXTex.lib")
-
+#pragma comment( lib, "WindowsCodecs.lib" )
 using namespace DirectX;
 Texture::Texture()
 {
@@ -51,7 +51,8 @@ HRESULT Texture::Load(std::string fileName)
 
 
 
-	hr = CreateShaderResourceView(Direct3D::pDevice,image.GetImages(), image.GetImageCount(), metadata, &pSRV_);
+	hr = CreateShaderResourceView(Direct3D::pDevice,image.GetImages(),
+		                          image.GetImageCount(), metadata, &pSRV_);
 	return S_OK;
 }
 
