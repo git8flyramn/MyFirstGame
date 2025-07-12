@@ -15,6 +15,7 @@ HWND hWnd = nullptr;
 const wchar_t* WIN_CLASS_NAME = L"SAMPLE_GAME_WINDOW";
 const int WINDOW_WIDTH = 800;
 const int WINDOW_HEIGHT = 600;
+float RAD = 45.0f;
 // グローバル変数:
 HINSTANCE hInst;                                // 現在のインターフェイス
 WCHAR szTitle[MAX_LOADSTRING];                  // タイトル バーのテキスト
@@ -99,11 +100,22 @@ int APIENTRY wWinMain(_In_ HINSTANCE hInstance,
 
 
            // 描画処理
-            Camera::Update();
-            Direct3D::BeginDraw();
-            XMMATRIX mat = XMMatrixRotationY(XMConvertToRadians(45));
-            d->Draw(mat);
-            Direct3D::EndDraw();
+          
+            
+       
+               float timer = 0.0f;
+               while(timer < 300.0f)
+               {
+                   Camera::Update();
+                   Direct3D::BeginDraw();
+                  XMMATRIX dmat = XMMatrixRotationY(XMConvertToRadians(RAD + timer));
+                  d->Draw(dmat);
+                  timer += 0.03f;
+                  Direct3D::EndDraw();
+               }
+        
+          
+           
             
     }
     d->Release();
