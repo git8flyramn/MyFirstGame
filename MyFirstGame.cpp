@@ -102,7 +102,8 @@ int APIENTRY wWinMain(_In_ HINSTANCE hInstance,
            // 描画処理
           
             
-       
+     /*   Camera::Update();
+        Direct3D::BeginDraw();
                float timer = 0.0f;
                while(timer < 300.0f)
                {
@@ -112,9 +113,14 @@ int APIENTRY wWinMain(_In_ HINSTANCE hInstance,
                   d->Draw(dmat);
                   timer += 0.03f;
                   Direct3D::EndDraw();
-               }
-        
-          
+               }*/
+               Camera::Update();
+               Direct3D::BeginDraw();
+               XMMATRIX dmat = XMMatrixRotationY(XMConvertToRadians(RAD));
+               d->Draw(dmat);
+             
+               Direct3D::EndDraw();
+    
            
             
     }
