@@ -20,13 +20,23 @@ HRESULT Quad::Initialize()
 	HRESULT hr;
 	VERTEX vertices[]=
 	{
-		//{{position},{uv}}
-		{ XMVectorSet(-1.0f,  1.0f, 0.0f, 0.0f),XMVectorSet(0.0f, 0.0f, 0.0f, 0.0f) },   // 四角形の頂点（左上）
-		{ XMVectorSet(1.0f,  1.0f, 0.0f, 0.0f),	XMVectorSet(1.0f, 0.0f, 0.0f, 0.0f) },   // 四角形の頂点（右上）
-		{ XMVectorSet(1.0f, -1.0f, 0.0f, 0.0f),	XMVectorSet(1.0f, 1.0f, 0.0f, 0.0f) },   // 四角形の頂点（右下）
-		{ XMVectorSet(-1.0f, -1.0f, 0.0f, 0.0f),XMVectorSet(0.0f, 1.0f, 0.0f, 0.0f) },   // 四角形の頂点（左下）
-		
+		{{-1.0f,  1.0f, -1.0f,0.0f} ,{0.0f,0.0f} },   // 四角形の頂点（左上）
+		{{1.0f,  1.0f, -1.0f, 0.0f},{1.0f, 0.0f}},   // 四角形の頂点（右上）
+		{{1.0f, -1.0f, -1.0f, 0.0f},{1.0f, 1.0f}},   // 四角形の頂点（右下）
+		{{-1.0f, -1.0f, -1.0f, 0.0f},{0.0f, 1.0f}},   // 四角形の頂点（左下
+
 	};
+	/*
+	VERTEX vertices[]=
+	{
+	{ XMVectorSet(-1.0f, 1.0f, -1.0f, 0.0f), XMVectorSet(0.0f,  0.0f, 0.0f, 0.0f), XMVectorSet(0.0f,0.0f,0.0f, 0.0f) },   // 四角形の頂点（左上）
+	{ XMVectorSet(1.0f,  1.0f, -1.0f, 0.0f), XMVectorSet(0.25f, 0.0f, 0.0f, 0.0f), XMVectorSet(1.0f,.0f,0.0f, 0.0f) },   // 四角形の頂点（右上）
+	{ XMVectorSet(1.0f, -1.0f, -1.0f, 0.0f), XMVectorSet(0.25f, 0.5f, 0.0f, 0.0f), XMVectorSet(1.0f,1.0f,0.0f, 0.0f) },   // 四角形の頂点（右下）
+	{ XMVectorSet(-1.0f,-1.0f, -1.0f, 0.0f), XMVectorSet(0.0f,  0.5f, 0.0f, 0.0f), XMVectorSet(0.0f,1.0f,0.0f, 0.0f) },   // 四角形の頂点（左下）
+	};
+
+	*/
+
 	
 	const int numVertex = sizeof(vertices) / sizeof(vertices[0]);
 	 //頂点データ用バッファの設定
@@ -104,8 +114,7 @@ void Quad::Draw(XMMATRIX& worldMatrix)
 	D3D11_MAPPED_SUBRESOURCE pdata;
 	CONSTANT_BUFFER cb;
 	cb.matWVP = XMMatrixTranspose(worldMatrix * Camera::GetViewMatrix() * Camera::GetProjectionMatrix());
-	
-	
+	//cb.matW =  XMMatrixAffineTransformation
 	Direct3D::pContext->Map(pConstantBuffer_, 0, D3D11_MAP_WRITE_DISCARD, 0, &pdata);	// GPUからのデータアクセスを止める
 	memcpy_s(pdata.pData, pdata.RowPitch, (void*)(&cb), sizeof(cb));	// データを値を送る
 		//再開
@@ -118,8 +127,7 @@ void Quad::Draw(XMMATRIX& worldMatrix)
 	Direct3D::pContext->PSSetShaderResources(0, 1, &pSRV);
 	
 	Direct3D::pContext->Unmap(pConstantBuffer_, 0);
-    
-	Direct3D::pContext->DrawIndexed(6, 0, 0);
+   
 	//頂点バッファ
 	UINT stride = sizeof(VERTEX);
 	UINT offset = 0;
@@ -134,7 +142,7 @@ void Quad::Draw(XMMATRIX& worldMatrix)
     Direct3D::pContext->VSSetConstantBuffers(0, 1, &pConstantBuffer_);	//頂点シェーダー用	
 	
 	Direct3D::pContext->PSSetConstantBuffers(0, 1, &pConstantBuffer_);	//ピクセルシェーダー用
-   
+	Direct3D::pContext->DrawIndexed(6, 0, 0);
 }
 
 void Quad::Release()

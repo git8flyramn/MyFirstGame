@@ -8,10 +8,7 @@
 using namespace DirectX;
 
 Dice::Dice()
-	: pVertexBuffer_(nullptr),
-	pIndexBuffer_(nullptr),
-	pConstantBuffer_(nullptr),
-	pTexture_(nullptr)
+	:Quad()
 {
 	
 }
@@ -27,23 +24,61 @@ HRESULT Dice::Initialize()
 	{
 		
 		//{{position},{uv}}
-		//{ XMVectorSet(-1.0f,  1.0f, 0.0f, 0.0f),XMVectorSet(0.0f, 0.0f, 0.0f, 0.0f) },   // 四角形の頂点（左上）
-		//{ XMVectorSet(1.0f,  1.0f, 0.0f, 0.0f),	XMVectorSet(1.0f, 0.0f, 0.0f, 0.0f) },   // 四角形の頂点（右上）
-		//{ XMVectorSet(1.0f, -1.0f, 0.0f, 0.0f),	XMVectorSet(1.0f, 1.0f, 0.0f, 0.0f) },   // 四角形の頂点（右下）
-		//{ XMVectorSet(-1.0f, -1.0f, 0.0f, 0.0f),XMVectorSet(0.0f, 1.0f, 0.0f, 0.0f) },   // 四角形の頂点（左下）
-		
-	    {XMVectorSet(-1.0f,  1.0f, 0.0f, 0.0f),XMVectorSet(0.0f, 0.0f, 0.0f, 0.0f) },   // 四角形の頂点（左上）
+		/*
+		  {{(-1.0f,  1.0f, 0.0f, 0.0f),(0.0f, 0.0f)}
+		*/
+		/*
+		{ XMVectorSet(-1.0f,  1.0f, 0.0f, 0.0f),XMVectorSet(0.0f, 0.0f, 0.0f, 0.0f) },   // 四角形の頂点（左上）
 		{ XMVectorSet(1.0f,  1.0f, 0.0f, 0.0f),	XMVectorSet(1.0f, 0.0f, 0.0f, 0.0f) },   // 四角形の頂点（右上）
 		{ XMVectorSet(1.0f, -1.0f, 0.0f, 0.0f),	XMVectorSet(1.0f, 1.0f, 0.0f, 0.0f) },   // 四角形の頂点（右下）
-		{ XMVectorSet(-1.0f, -1.0f, 0.0f, 0.0f),XMVectorSet(0.0f, 1.0f, 0.0f, 0.0f) },   // 四角形の頂点（左下
-
-	  
-	 
-	  
+		{ XMVectorSet(-1.0f, -1.0f, 0.0f, 0.0f),XMVectorSet(0.0f, 1.0f, 0.0f, 0.0f) },   // 四角形の頂点（左下）
 		
+		*/
+		//前
+	    {{-1.0f,  1.0f, -1.0f,0.0f} ,{0.0f, 0.0f}},   // 四角形の頂点（左上）
+		{{1.0f,  1.0f, -1.0f, 0.0f}, {1.0f, 0.0f}},   // 四角形の頂点（右上）
+		{{1.0f, -1.0f, -1.0f, 0.0f}, {1.0f, 1.0f}},   // 四角形の頂点（右下）
+		{{-1.0f, -1.0f, -1.0f, 0.0f},{0.0f, 1.0f}},   // 四角形の頂点（左下
+	    //後ろ
+		{{-1.0f,  1.0f, 1.0f,0.0f} , {0.0f,  0.0f}},   // 四角形の頂点（左上）
+		{{1.0f,   1.0f, 1.0f, 0.0f}, {1.0f,  0.0f}},   // 四角形の頂点（右上）
+		{{1.0f,  -1.0f, 1.0f, 0.0f}, {1.0f,  1.0f}},   // 四角形の頂点（右下）
+		{{-1.0f, -1.0f, 1.0f, 0.0f}, { 0.0f, 1.0f}},   // 四角形の頂点（左下
+	  
+		{{1.0f,   1.0f,-1.0f,0.0f},  {0.0f, 0.0f}}, 
+		{{1.0f,   1.0f, 1.0f,0.0f},  {1.0f ,0.0f}},
+		{{1.0f,  -1.0f, 1.0f,0.0f},  {1.0f, 1.0f}},
+		{{1.0f,  -1.0f,-1.0f,0.0f},  {0.0f, 1.0f}},
+
+		{{-1.0f,  1.0f,-1.0f,0.0f},  {0.0f,0.0f}},
+		{{-1.0f,  1.0f, 1.0f,0.0f},  {1.0f,0.0f}},
+		{{-1.0f, -1.0f, 1.0f,0.0f},  {1.0f,1.0f}},
+		{{-1.0f, -1.0f,-1.0f,0.0f},  {0.0f,1.0f}},
+		
+		//上
+		{{ -1.0f, 1.0f, 1.0f, 0.0f},  {0.0f,0.0f}},
+		{{  1.0f,1.0f,  1.0f, 0.0f},  {1.0f,0.0f}},
+		{{  1.0f,1.0f ,-1.0f, 0.0f},  {1.0f,1.0f}},
+		{{-1.0f,1.0f,  -1.0f, 0.0f},  {0.0f,1.0f}},
+	    //下
+		{{ -1.0f,-1.0f,1.0f,0.0f},    {0.0f,0.0f}},
+		{{  1.0f,-1.0f,1.0f,0.0f},    {1.0f,0.0f}},
+		{{  1.0f,-1.0f,-1.0f,0.0f},   {1.0f,1.0f}},
+		{{ -1.0f,-1.0f,-1.0f,0.0f},   {0.0f,1.0f}},
+
+		
+	 
+
+
 	};
 	
-
+	int index[] = { 0,1,2,    0,2,3,
+		            4,6,5,    4,7,6,
+		            8,9,10,   8,10,11,
+		            12,14,13, 12,15,14,
+		            16,17,18, 16,18,19,
+		            20,21,22, 20,23,22,
+	}; //CW
 	const int numVertex = sizeof(vertices) / sizeof(vertices[0]);
 	//頂点データ用バッファの設定
 	D3D11_BUFFER_DESC bd_vertex;
@@ -53,7 +88,7 @@ HRESULT Dice::Initialize()
 	bd_vertex.BindFlags = D3D11_BIND_VERTEX_BUFFER;
 	bd_vertex.CPUAccessFlags = 0;
 	bd_vertex.MiscFlags = 0;
-	bd_vertex.StructureByteStride = 0;
+	//bd_vertex.StructureByteStride = 0;
 	D3D11_SUBRESOURCE_DATA data_vertex;
 	data_vertex.pSysMem = vertices;
 	hr = Direct3D::pDevice->CreateBuffer(&bd_vertex, &data_vertex, &pVertexBuffer_);
@@ -63,8 +98,7 @@ HRESULT Dice::Initialize()
 		return hr;
 	}
 	//インデックス情報
-	int index[] = { 0,2,3, 0,1,2 
-	                }; //CW
+	
 	
 	// インデックスバッファを生成する
 	D3D11_BUFFER_DESC   bd;
@@ -92,7 +126,6 @@ HRESULT Dice::Initialize()
 	cb.BindFlags = D3D11_BIND_CONSTANT_BUFFER;
 	cb.CPUAccessFlags = D3D11_CPU_ACCESS_WRITE;
 	cb.MiscFlags = 0;
-	cb.StructureByteStride = 0;
 	
 	//コンスタントバッファの作成
 	hr = Direct3D::pDevice->CreateBuffer(&cb, nullptr, &pConstantBuffer_);
@@ -146,6 +179,8 @@ void Dice::Draw(DirectX::XMMATRIX& worldMatrix)
 	Direct3D::pContext->VSSetConstantBuffers(0, 1, &pConstantBuffer_);	//頂点シェーダー用	
 
 	Direct3D::pContext->PSSetConstantBuffers(0, 1, &pConstantBuffer_);	//ピクセルシェーダー用
+
+	Direct3D::pContext->DrawIndexed(36, 0, 0);
 
 }
 

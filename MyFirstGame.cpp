@@ -79,8 +79,8 @@ int APIENTRY wWinMain(_In_ HINSTANCE hInstance,
     MSG msg = {};
    /*Quad* q = new Quad();
    hr =  q->Initialize();*/
-   Dice* d = new Dice();
-   hr = d->Initialize();
+   Dice* dice = new Dice();
+   hr = dice->Initialize();
    if (FAILED(hr))
    {
        return 0;
@@ -90,43 +90,37 @@ int APIENTRY wWinMain(_In_ HINSTANCE hInstance,
     while (msg.message != WM_QUIT)
     {
 
-        while(PeekMessage(&msg, NULL, 0U, 0U, PM_REMOVE))
+        while (PeekMessage(&msg, NULL, 0U, 0U, PM_REMOVE))
         {
 
             TranslateMessage(&msg);
             DispatchMessage(&msg);
         }
-      
 
 
-           // 描画処理
-          
-            
-     /*   Camera::Update();
-        Direct3D::BeginDraw();
+
+        // 描画処理
+
+             
                float timer = 0.0f;
-               while(timer < 300.0f)
+               while (timer < 300)
                {
                    Camera::Update();
                    Direct3D::BeginDraw();
-                  XMMATRIX dmat = XMMatrixRotationY(XMConvertToRadians(RAD + timer));
-                  d->Draw(dmat);
-                  timer += 0.03f;
-                  Direct3D::EndDraw();
-               }*/
-               Camera::Update();
-               Direct3D::BeginDraw();
-               XMMATRIX dmat = XMMatrixRotationY(XMConvertToRadians(RAD));
-               d->Draw(dmat);
-             
-               Direct3D::EndDraw();
+                   XMMATRIX dmat = XMMatrixRotationY(XMConvertToRadians(RAD + timer));
+                   timer += 0.03f;
+                   dice->Draw(dmat);
+                   Direct3D::EndDraw();
+               }
+              
+               
     
            
             
     }
-    d->Release();
-    SAFE_DELETE(d);
-    //Direct3D::Release();
+    dice->Release();
+    SAFE_DELETE(dice);
+   // Direct3D::Release();
     
    
     return (int) msg.wParam;

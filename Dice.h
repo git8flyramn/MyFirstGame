@@ -12,13 +12,9 @@ class Dice :
    public:
        Dice();
        ~Dice();
-	   void Update(VERTEX vertices);
-	   HRESULT Initialize();
+	   HRESULT Initialize() override;
 	   void Draw(DirectX::XMMATRIX& worldMatrix);
 	   void Release();
-	   void RotateDice(float deltaTime);
-	   void Update();
-	
 	 
 private:
 	ID3D11Buffer* pVertexBuffer_;	//頂点バッファ
