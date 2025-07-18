@@ -21,8 +21,8 @@ private:
 	ID3D11Buffer* pIndexBuffer_;    //インデックスバッファ
 	ID3D11Buffer* pConstantBuffer_;	//定数バッファ
 	Texture* pTexture_;
-	float rotaionAngele = 0.0f;
+	/*float rotaionAngele = 0.0f;
 	XMVECTOR roationAxis = XMVectorSet(0.0f, 1.0f, 0.0f, 0.0f);
-	XMMATRIX rotationMatrix;
+	XMMATRIX rotationMatrix;*/
 };
 

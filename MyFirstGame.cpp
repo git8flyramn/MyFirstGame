@@ -100,8 +100,13 @@ int APIENTRY wWinMain(_In_ HINSTANCE hInstance,
 
 
         // 描画処理
-
-             
+      /*  Camera::Update();
+        Direct3D::BeginDraw();
+        float timer = 0.0f;
+        XMMATRIX dmat = XMMatrixRotationY(XMConvertToRadians(RAD + timer));
+        timer += 0.03f;
+        dice->Draw(dmat);
+        Direct3D::EndDraw();*/
                float timer = 0.0f;
                while (timer < 300)
                {
@@ -120,7 +125,7 @@ int APIENTRY wWinMain(_In_ HINSTANCE hInstance,
     }
     dice->Release();
     SAFE_DELETE(dice);
-   // Direct3D::Release();
+    Direct3D::Release();
     
    
     return (int) msg.wParam;
