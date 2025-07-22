@@ -30,7 +30,7 @@ struct VS_OUT
 //───────────────────────────────────────
 // 頂点シェーダ
 //───────────────────────────────────────
-VS_OUT VS(float4 pos : POSITION, float4 uv : TEXCOORD, float4 normal : NOMAL)
+VS_OUT VS(float4 pos : POSITION, float4 uv : TEXCOORD)
 {
 	//ピクセルシェーダーへ渡す情報
     VS_OUT outData;
@@ -41,14 +41,7 @@ VS_OUT VS(float4 pos : POSITION, float4 uv : TEXCOORD, float4 normal : NOMAL)
     //nomal = matW;
     outData.pos = mul(pos, matWVP);
     outData.uv = uv.xy; //UV座標はそのまま
-    
-    normal = mul(normal, matNomal); //法線ベクトルをワールドビュー座標に変換する
-    normal = normalize(normal);
-    normal.w = 0;
-    float4 light = float4(-1, 0.5, -0.7, 0);
-    light = normalize(light);
-    //outData.color = dot(normal, light);
-    outData.color = dot(normal, light);
+    outData.color = float4(1, 1, 1, 1);
     //まとめて出力
     return outData;
 }
@@ -58,7 +51,10 @@ VS_OUT VS(float4 pos : POSITION, float4 uv : TEXCOORD, float4 normal : NOMAL)
 //───────────────────────────────────────
 float4 PS(VS_OUT inData) : SV_Target
 {
-    float4 color = g_texture.Sample(g_sampler, inData.uv) * inData.color;
+    
+    
+    float4 color =  g_texture.Sample(g_sampler, inData.uv) * inData.color;
     //float4 ret = float(inData.uv.x,inData.uv.y,0,1;
     return color;
+    
 }

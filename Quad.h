@@ -6,7 +6,8 @@ using namespace DirectX;
 struct CONSTANT_BUFFER
 {
 	DirectX::XMMATRIX matWVP; //world*view*projectionの行列
-	DirectX::XMMATRIX matW;
+	DirectX::XMMATRIX matNomal; //法線変換用の行列
+	DirectX::XMMATRIX matWorld; //ワールド行列
 };
 
 //頂点情報

@@ -79,16 +79,15 @@ HRESULT Dice::Initialize()
 		            16,17,18, 16,18,19,
 		            20,22,21, 20,23,22,
 	}; //CW
-	const int numVertex = sizeof(vertices) / sizeof(vertices[0]);
+	//const int numVertex = sizeof(vertices) / sizeof(vertices[0]);
 	//頂点データ用バッファの設定
 	D3D11_BUFFER_DESC bd_vertex;
-	//bd_vertex.ByteWidth = sizeof(vertices) ;
 	bd_vertex.ByteWidth = sizeof(vertices);
 	bd_vertex.Usage = D3D11_USAGE_DEFAULT;
 	bd_vertex.BindFlags = D3D11_BIND_VERTEX_BUFFER;
 	bd_vertex.CPUAccessFlags = 0;
 	bd_vertex.MiscFlags = 0;
-	//bd_vertex.StructureByteStride = 0;
+	bd_vertex.StructureByteStride = 0;
 	D3D11_SUBRESOURCE_DATA data_vertex;
 	data_vertex.pSysMem = vertices;
 	hr = Direct3D::pDevice->CreateBuffer(&bd_vertex, &data_vertex, &pVertexBuffer_);
@@ -101,7 +100,7 @@ HRESULT Dice::Initialize()
 	
 	
 	// インデックスバッファを生成する
-	D3D11_BUFFER_DESC   bd;
+	D3D11_BUFFER_DESC bd;
 	bd.Usage = D3D11_USAGE_DEFAULT;
 	bd.ByteWidth = sizeof(index);
 	bd.BindFlags = D3D11_BIND_INDEX_BUFFER;
@@ -114,6 +113,7 @@ HRESULT Dice::Initialize()
 	InitData.SysMemPitch = 0;
 	InitData.SysMemSlicePitch = 0;
 	hr = Direct3D::pDevice->CreateBuffer(&bd, &InitData, &pIndexBuffer_);
+	
 	if (FAILED(hr))
 	{
 		MessageBox(nullptr, L"インデックスバッファの作成に失敗しました", L"エラー", MB_OK);
@@ -146,18 +146,20 @@ HRESULT Dice::Initialize()
 
 void Dice::Draw(DirectX::XMMATRIX& worldMatrix)
 {
-	D3D11_MAPPED_SUBRESOURCE pdata;
+	Direct3D::SetShader(SHADER_3D); //シェーダーの設定
+
+	//コンスタントバッファに渡す情報
 	CONSTANT_BUFFER cb;
-	cb.matWVP = XMMatrixTranspose(worldMatrix * Camera::GetViewMatrix() * Camera::GetProjectionMatrix());
+	cb.matWVP =   XMMatrixTranspose(worldMatrix * Camera::GetViewMatrix() * Camera::GetProjectionMatrix());
+	cb.matNomal = XMMatrixInverse(nullptr, worldMatrix); //法線変換用の行列
+	cb.matWorld = XMMatrixTranspose(worldMatrix);
 
-
+    //再開
+	D3D11_MAPPED_SUBRESOURCE pdata;
+	Direct3D::pContext->Unmap(pConstantBuffer_, 0);
 	Direct3D::pContext->Map(pConstantBuffer_, 0, D3D11_MAP_WRITE_DISCARD, 0, &pdata);	// GPUからのデータアクセスを止める
 	memcpy_s(pdata.pData, pdata.RowPitch, (void*)(&cb), sizeof(cb));	// データを値を送る
-	//再開
 
-	Direct3D::pContext->Unmap(pConstantBuffer_, 0);
-
-	//Direct3D::pContext->DrawIndexed(6, 0, 0);
 	//頂点バッファ
 	UINT stride = sizeof(VERTEX);
 	UINT offset = 0;

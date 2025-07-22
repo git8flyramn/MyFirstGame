@@ -35,41 +35,15 @@ HRESULT Quad::Initialize()
 	//{ XMVectorSet(-1.0f,-1.0f, -1.0f, 0.0f), XMVectorSet(0.0f,  0.5f, 0.0f, 0.0f), XMVectorSet(0.0f,1.0f,0.0f, 0.0f) },   // 四角形の頂点（左下）
 	//};
 
-	VERTEX vertices[] = {
-	{ { -1.0f, 1.0f, -1.0f, 0.0f }, { 0.0f, 0.0f } },   // 四角形の頂点（左上）
-	{ {1.0f,  1.0f, -1.0f, 0.0f},{1.0f, 0.0f} },   // 四角形の頂点（右上）
-	{ {1.0f, -1.0f, -1.0f, 0.0f},{1.0f, 1.0f} },   // 四角形の頂点（右下）
-	{ {-1.0f, -1.0f, -1.0f, 0.0f},{0.0f, 1.0f} },   // 四角形の頂点（左下
-	//後ろ
-	{{-1.0f,  1.0f, +1.0f,0.0f} , {0.0f,  0.0f} },   // 四角形の頂点（左上）
-	{{1.0f,   1.0f, +1.0f, 0.0f}, {1.0f,  0.0f} },   // 四角形の頂点（右上）
-	{{1.0f,  -1.0f, +1.0f, 0.0f}, {1.0f,  1.0f} },   // 四角形の頂点（右下）
-	{{-1.0f, -1.0f, +1.0f, 0.0f}, { 0.0f, 1.0f} },   // 四角形の頂点（左下
-
-	{{1.0f,   1.0f,-1.0f,0.0f},  {0.0f, 0.0f} },
-	{{1.0f,   1.0f, +1.0f,0.0f},  {1.0f ,0.0f} },
-	{{1.0f,  -1.0f, 1.0f,0.0f},  {1.0f, 1.0f} },
-	{{1.0f,  -1.0f,-1.0f,0.0f},  {0.0f, 1.0f} },
-
-	{{-1.0f,  1.0f,-1.0f,0.0f},  {0.0f,0.0f} },
-	{{-1.0f,  1.0f, +1.0f,0.0f},  {1.0f,0.0f} },
-	{{-1.0f, -1.0f, 1.0f,0.0f},  {1.0f,1.0f} },
-	{{-1.0f, -1.0f,-1.0f,0.0f},  {0.0f,1.0f} },
-
-	//上
-    {{ -1.0f, 1.0f, 1.0f, 0.0f},  {0.0f,0.0f} },
-    {{  1.0f,1.0f,  1.0f, 0.0f},  {1.0f,0.0f} },
-	{{  1.0f,1.0f ,-1.0f, 0.0f},  {1.0f,1.0f} },
-	{{-1.0f,1.0f,  -1.0f, 0.0f},  {0.0f,1.0f} },
-	//下
-	{{ -1.0f,-1.0f,1.0f,0.0f},    {0.0f,0.0f} },
-	{{  1.0f,-1.0f,1.0f,0.0f},    {1.0f,0.0f} },
-	{{  1.0f,-1.0f,-1.0f,0.0f},   {1.0f,1.0f} },
-	{{ -1.0f,-1.0f,-1.0f,0.0f},   {0.0f,1.0f} },
-
+	VERTEX vertices[] =
+	{
+		//{{position}, {uv}}
+		{{ -1.0f,  1.0f, 0.0f, 0.0f}, {0.0f,  0.0f}},// 四角形の頂点（左上）
+		{{  1.0f,  1.0f, 0.0f, 0.0f}, {1.0f,  0.0f}},// 四角形の頂点（右上）
+		{{  1.0f, -1.0f, 0.0f, 0.0f}, {1.0f,  1.0f}},// 四角形の頂点（右下）
+		{{ -1.0f, -1.0f, 0.0f, 0.0f}, {0.0f,  1.0f}}	// 四角形の頂点（左下）	}
 	};
-	//
-	const int numVertex = sizeof(vertices) / sizeof(vertices[0]);
+	//const int numVertex = sizeof(vertices) / sizeof(vertices[0]);
 	//sizeof(vertices) / sizeof(vertices[0]);
 	 //頂点データ用バッファの設定
 	D3D11_BUFFER_DESC bd_vertex;
@@ -125,7 +99,7 @@ HRESULT Quad::Initialize()
 		return hr;
 	}
 	pTexture_ = new Texture();
-	pTexture_->Load("dice.png");
+	pTexture_->Load("Dice1.png");
 
 	return S_OK;
 	
@@ -143,23 +117,18 @@ void Quad::Draw(XMMATRIX& worldMatrix)
 	//XMMATRIX proj = XMMatrixPerspectiveFovLH(XM_PIDIV4, 800.0f / 600.0f, 0.1f, 100.0f);//射影行列
 
 	
-	D3D11_MAPPED_SUBRESOURCE pdata;
+
 	CONSTANT_BUFFER cb;
 	cb.matWVP = XMMatrixTranspose(worldMatrix * Camera::GetViewMatrix() * Camera::GetProjectionMatrix());
-	//cb.matW =  XMMatrixAffineTransformation
+	// 移動、拡大、縮小
+	D3D11_MAPPED_SUBRESOURCE pdata;
 	Direct3D::pContext->Map(pConstantBuffer_, 0, D3D11_MAP_WRITE_DISCARD, 0, &pdata);	// GPUからのデータアクセスを止める
-	memcpy_s(pdata.pData, pdata.RowPitch, (void*)(&cb), sizeof(cb));	// データを値を送る
-		//再開
+	Direct3D::pContext->Unmap(pConstantBuffer_, 0);	//再開
+	memcpy_s(pdata.pData, pdata.RowPitch, (void*)(&cb), sizeof(cb));
+
+     	// データを値を送る
 	
-	ID3D11SamplerState* pSampler = pTexture_->GetSampler();
-	Direct3D::pContext->PSSetSamplers(0, 1, &pSampler);
 	
-	ID3D11ShaderResourceView* pSRV = pTexture_->GetSRV();
-	
-	Direct3D::pContext->PSSetShaderResources(0, 1, &pSRV);
-	
-	Direct3D::pContext->Unmap(pConstantBuffer_, 0);
-   
 	//頂点バッファ
 	UINT stride = sizeof(VERTEX);
 	UINT offset = 0;
@@ -174,13 +143,22 @@ void Quad::Draw(XMMATRIX& worldMatrix)
     Direct3D::pContext->VSSetConstantBuffers(0, 1, &pConstantBuffer_);	//頂点シェーダー用	
 	
 	Direct3D::pContext->PSSetConstantBuffers(0, 1, &pConstantBuffer_);	//ピクセルシェーダー用
+	
+	ID3D11SamplerState* pSampler = pTexture_->GetSampler();
+	Direct3D::pContext->PSSetSamplers(0, 1, &pSampler);
+
+	ID3D11ShaderResourceView* pSRV = pTexture_->GetSRV();
+
+	Direct3D::pContext->PSSetShaderResources(0, 1, &pSRV);
+
+	
 	Direct3D::pContext->DrawIndexed(6, 0, 0);
 }
 
 void Quad::Release()
 {
-	pTexture_->Release();
-	SAFE_DELETE(pTexture_);
+	//pTexture_->Release();
+	//SAFE_DELETE(pTexture_);
 
 	SAFE_RELEASE(pConstantBuffer_);
 	SAFE_RELEASE(pIndexBuffer_);
