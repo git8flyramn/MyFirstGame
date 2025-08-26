@@ -85,7 +85,7 @@ HRESULT Quad::Initialize()
 	}
 
 	pTexture_ = new Texture();
-	pTexture_->Load("dice.png");
+	pTexture_->Load("dice1.png");
 
 	return S_OK;
 }

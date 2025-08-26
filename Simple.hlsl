@@ -1,6 +1,8 @@
 //───────────────────────────────────────
 // テクスチャ＆サンプラーデータのグローバル変数定義
 //───────────────────────────────────────
+
+//  Sample3D.hlsl
 Texture2D g_texture : register(t0); //テクスチャー
 SamplerState g_sampler : register(s0); //サンプラー
 
@@ -40,15 +42,15 @@ VS_OUT VS(float4 pos : POSITION, float4 uv : TEXCOORD, float4 normal : NOMAL)
     //法線を回転
     //nomal = matW;
     outData.pos = mul(pos, matWVP);
-    outData.uv = uv.xy; //UV座標はそのまま
+    outData.uv = uv.xy;//UV座標はそのまま
     
-    normal = mul(normal, matNomal); //法線ベクトルをワールドビュー座標に変換する
-    normal = normalize(normal);
-    normal.w = 0;
-    float4 light = float4(-1, 0.5, -0.7, 0);
+    normal = mul(normal, matNomal);//法線ベクトルをワールドビュー・プロジェクション行列で変換
+    normal = normalize(normal);//法線ベクトルを正規化=長さ1に
+    normal.w = 0;//w成分は0にする
+    float light = float4(-1, 0.5, -0.7, 0);
     light = normalize(light);
     outData.color = dot(normal, light);
-    //まとめて出力
+    
     return outData;
 }
 

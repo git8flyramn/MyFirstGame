@@ -8,7 +8,10 @@
 using namespace DirectX;
 
 Dice::Dice()
-	:Quad()
+	: pVertexBuffer_(nullptr),
+	pIndexBuffer_(nullptr),
+	pConstantBuffer_(nullptr),
+	pTexture_(nullptr)
 {
 	
 }
