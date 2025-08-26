@@ -4,9 +4,10 @@
 #include "framework.h"
 #include "MyFirstGame.h"
 #include "Direct3D.h"
-#include "Quad.h"
+//#include "Quad.h"
 #include "Camera.h"
-#include "Dice.h"
+//#include "Dice.h"
+#include "Sprite.h"
 HWND hWnd = nullptr;
 
 #define MAX_LOADSTRING 100
@@ -79,8 +80,10 @@ int APIENTRY wWinMain(_In_ HINSTANCE hInstance,
     MSG msg = {};
    /*Quad* q = new Quad();
    hr =  q->Initialize();*/
-   Dice* dice = new Dice();
-   hr = dice->Initialize();
+    Sprite* sprite = new Sprite();
+   //Dice* dice = new Dice();
+   //hr = dice->Initialize();
+    hr = sprite->Initialize();
    if (FAILED(hr))
    {
        return 0;
@@ -96,7 +99,8 @@ int APIENTRY wWinMain(_In_ HINSTANCE hInstance,
             TranslateMessage(&msg);
             DispatchMessage(&msg);
         }
-
+        Camera::Update();
+        Direct3D::BeginDraw();
 
 
         // 描画処理
@@ -107,26 +111,29 @@ int APIENTRY wWinMain(_In_ HINSTANCE hInstance,
         timer += 0.03f;
         dice->Draw(dmat);
         Direct3D::EndDraw();*/
-               float timer = 0.0f;
-               while (timer < 300)
-               {
-                   Camera::Update();
-                   Direct3D::BeginDraw();
-                   XMMATRIX dmat = XMMatrixRotationY(XMConvertToRadians(RAD + timer));
-                   timer += 0.03f;
-                   dice->Draw(dmat);
-                   Direct3D::EndDraw();
-               }
-              
-               
-    
-           
-            
+             //  float timer = 0.0f;
+             ///*  XMMATRIX mat = XMMatrixRotationY(timer);
+             //  timer += 0.05f;
+             //  dice->Draw(mat);
+             //  Direct3D::EndDraw();*/
+             //  while (timer < 300)
+             //  {
+             //      Camera::Update();
+             //      Direct3D::BeginDraw();
+             //      XMMATRIX dmat = XMMatrixRotationY(XMConvertToRadians(RAD + timer));
+             //      dice->Draw(dmat);
+             //      timer += 0.03f;
+             //      Direct3D::EndDraw();
+             //  }
+        XMMATRIX mat = XMMatrixIdentity();
+        sprite->Draw(mat);
+        Direct3D::EndDraw();
     }
-    dice->Release();
-    SAFE_DELETE(dice);
+   // dice->Release();
+  //  SAFE_DELETE(dice);
+   // Direct3D::Release();
+    sprite->Release();
     Direct3D::Release();
-    
    
     return (int) msg.wParam;
 }

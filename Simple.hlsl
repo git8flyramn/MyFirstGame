@@ -13,7 +13,7 @@ cbuffer global
     float4x4 matWVP; // ワールド・ビュー・プロジェクションの合成行列
     //float4x4 matW; //ワールド行列
     float4x4 matNomal;
-    //float4x4 matWorld;
+    float4x4 matWorld;
 };
 
 //───────────────────────────────────────
@@ -47,7 +47,6 @@ VS_OUT VS(float4 pos : POSITION, float4 uv : TEXCOORD, float4 normal : NOMAL)
     normal.w = 0;
     float4 light = float4(-1, 0.5, -0.7, 0);
     light = normalize(light);
-    //outData.color = dot(normal, light);
     outData.color = dot(normal, light);
     //まとめて出力
     return outData;

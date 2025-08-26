@@ -31,10 +31,10 @@ HRESULT Direct3D::InitShader()
     {
         return E_FAIL;
     }
-    if (FAILED(InitShader2D))
+   /* if (FAILED(InitShader2D))
     {
         return E_FAIL;
-    }
+    }*/
     return S_OK;
 }
 
@@ -72,7 +72,7 @@ HRESULT Direct3D::InitShader3D()
     D3D11_INPUT_ELEMENT_DESC layout[] = {
         { "POSITION", 0, DXGI_FORMAT_R32G32B32_FLOAT, 0, 0,  D3D11_INPUT_PER_VERTEX_DATA, 0 },//位置
         { "TEXCOORD", 0, DXGI_FORMAT_R32G32_FLOAT, 0,sizeof(DirectX::XMFLOAT4) , D3D11_INPUT_PER_VERTEX_DATA, 0},//UV座標
-        {  "NORMAL",  0, DXGI_FORMAT_R32G32B32_FLOAT, 0, sizeof(DirectX::XMFLOAT4)+ sizeof(DirectX::XMFLOAT4),	D3D11_INPUT_PER_VERTEX_DATA, 0},//法線
+        {  "NORMAL",  0, DXGI_FORMAT_R32G32B32_FLOAT, 0, sizeof(DirectX::XMFLOAT4)+ sizeof(DirectX::XMFLOAT2),	D3D11_INPUT_PER_VERTEX_DATA, 0},//法線
     };
 
     hr = pDevice->CreateInputLayout(layout, 3, pCompileVS->GetBufferPointer(),
@@ -112,7 +112,8 @@ HRESULT Direct3D::InitShader2D()
     D3DCompileFromFile(L"Simple2D.hlsl", nullptr, nullptr, "VS", "vs_5_0", NULL, 0, &pCompileVS, NULL);
     assert(pCompileVS != nullptr);
 
-    hr = pDevice->CreateVertexShader(pCompileVS->GetBufferPointer(), pCompileVS->GetBufferSize(), NULL,&(shaderBundle[SHADER_2D].pVertexShader));
+    hr = pDevice->CreateVertexShader(pCompileVS->GetBufferPointer(), pCompileVS->GetBufferSize(), 
+                                     NULL,&(shaderBundle[SHADER_2D].pVertexShader));
 
     if (FAILED(hr))
     {
@@ -135,7 +136,7 @@ HRESULT Direct3D::InitShader2D()
     //頂点インプットレイアウト
     D3D11_INPUT_ELEMENT_DESC layout[] = {
         { "POSITION", 0, DXGI_FORMAT_R32G32B32_FLOAT, 0, 0,  D3D11_INPUT_PER_VERTEX_DATA, 0 },//位置
-        { "TEXCOORD", 0, DXGI_FORMAT_R32G32_FLOAT, 0,sizeof(DirectX::XMVECTOR) , D3D11_INPUT_PER_VERTEX_DATA, 0},//UV座標
+        { "TEXCOORD", 0, DXGI_FORMAT_R32G32_FLOAT, 0,sizeof(DirectX::XMFLOAT4) , D3D11_INPUT_PER_VERTEX_DATA, 0},//UV座標
     };
 
     hr = pDevice->CreateInputLayout(layout, 2, pCompileVS->GetBufferPointer(),
@@ -271,10 +272,12 @@ void Direct3D::Release()
     SAFE_RELEASE(pPixelShader);
     SAFE_RELEASE(pVertexShader);
 
+    
     SAFE_RELEASE(pDevice);
     SAFE_RELEASE(pContext);
     SAFE_RELEASE(pSwapChain);
     SAFE_RELEASE(pRenderTargetView)
+      
     //pRasterizerState->Release();
     //pVertexLayout->Release();
     //pPixelShader->Release();

@@ -1,34 +1,30 @@
-#include "Quad.h"
+#include "Sprite.h"
+
 #include "Camera.h"
 #include "Texture.h"
 
+Sprite::Sprite() : pVertexBuffer_(nullptr), pIndexBuffer_(nullptr),
+pConstantBuffer_(nullptr), pTexture_(nullptr)
 
-Quad::Quad()
-	: pVertexBuffer_(nullptr),
-	pIndexBuffer_(nullptr),
-	pConstantBuffer_(nullptr),
-	pTexture_(nullptr)
 {
 }
 
-Quad::~Quad()
+Sprite::~Sprite()
 {
 }
 
-HRESULT Quad::Initialize()
+HRESULT Sprite::Initialize()
 {
 	HRESULT hr;
 	//縦横2の乗数
 	VERTEX vertices[] =
 	{
-		//{{position}, {uv}}
-		{{ -1.0f,  1.0f, 0.0f, 0.0f}, {0.0f,  0.0f}},// 四角形の頂点（左上）
-		{{  1.0f,  1.0f, 0.0f, 0.0f}, {1.0f,  0.0f}},// 四角形の頂点（右上）
-		{{  1.0f, -1.0f, 0.0f, 0.0f}, {1.0f,  1.0f}},// 四角形の頂点（右下）
-		{{ -1.0f, -1.0f, 0.0f, 0.0f}, {0.0f,  1.0f}}	// 四角形の頂点（左下）	}
+		//{{position,{uv}}
+		{{-1.0f,1.0f,0.0f,0.0f},{0.0f,0.0f}},//四角形の頂点(左上)
+		{ {1.0f,1.0f,0.0f,0.0f},{1.0f,1.0f} },//四角形の頂点(右上)
+		{{1.0f,-1.0f,0.0f,0.0f},{1.0f,1.0f}}, //四角形の頂点(右下)
+		{{-1.0f,-1.0f,0.0f,0.0f},{0.0f,0.0f}},//四角形の頂点(左下)
 	};
-	//const int numVertex = sizeof(vertices)/sizeof(vertices[0]);
-
 	// 頂点データ用バッファの設定
 	D3D11_BUFFER_DESC bd_vertex;
 	bd_vertex.ByteWidth = sizeof(vertices);
@@ -85,17 +81,17 @@ HRESULT Quad::Initialize()
 	}
 
 	pTexture_ = new Texture();
-	pTexture_->Load("dice.png");
-
+	pTexture_->Load("dice1.png");
 	return S_OK;
 }
 
-void Quad::Draw(XMMATRIX& worldMatrix)
+void Sprite::Draw(XMMATRIX& worldMatrix)
 {
+	Direct3D::SetShader(SHADER_TYPE::SHADER_2D);
 	//コンスタントバッファに渡す情報
 	CONSTANT_BUFFER cb;
-	cb.matWVP = XMMatrixTranspose(worldMatrix * Camera::GetViewMatrix() * Camera::GetProjectionMatrix());
-
+	//cb.matWVP = XMMatrixTranspose(worldMatrix * Camera::GetViewMatrix() * Camera::GetProjectionMatrix());
+	cb.matWorld = XMMatrixTranspose(worldMatrix);
 
 
 	D3D11_MAPPED_SUBRESOURCE pdata;
@@ -123,15 +119,13 @@ void Quad::Draw(XMMATRIX& worldMatrix)
 	ID3D11ShaderResourceView* pSRV = pTexture_->GetSRV();
 	Direct3D::pContext->PSSetShaderResources(0, 1, &pSRV);
 
-
-
 	Direct3D::pContext->DrawIndexed(6, 0, 0);
 }
 
-void Quad::Release()
+void Sprite::Release()
 {
+	//終了処理
 	SAFE_RELEASE(pConstantBuffer_);
 	SAFE_RELEASE(pIndexBuffer_);
 	SAFE_RELEASE(pVertexBuffer_);
-
 }

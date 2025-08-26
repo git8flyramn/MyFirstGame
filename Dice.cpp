@@ -194,5 +194,6 @@ void Dice::Release()
 	SAFE_RELEASE(pConstantBuffer_);
 	SAFE_RELEASE(pIndexBuffer_);
 	SAFE_RELEASE(pVertexBuffer_);
+	Direct3D::pContext->Release();
 }
 

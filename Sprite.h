@@ -1,12 +1,10 @@
 #pragma once
 #include "Direct3D.h"
 #include <DirectXMath.h>
-#include "Texture.h"
+
 using namespace DirectX;
 struct CONSTANT_BUFFER
 {
-	DirectX::XMMATRIX matWVP; //world*view*projectionの行列
-	DirectX::XMMATRIX matNomal; //法線変換用の行列
 	DirectX::XMMATRIX matWorld; //ワールド行列
 };
 
@@ -15,15 +13,14 @@ struct VERTEX
 {
 	XMFLOAT4 pos;
 	XMFLOAT2 uv;
-	XMFLOAT4 normal;
 };
 
 class Texture;
-class Quad
+class Sprite
 {
 public:
-	Quad();
-	virtual ~Quad();
+	Sprite();
+	virtual ~Sprite();
 	virtual HRESULT Initialize();
 	void Draw(DirectX::XMMATRIX& worldMatrix);
 	void Release();
