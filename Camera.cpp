@@ -13,15 +13,17 @@ void Camera::Initialize()
     position_ = XMVectorSet(0, 3, -10, 0); //カメラの位置
     target_ = XMVectorSet(0, 0, 0, 0); //カメラの焦点
    
-    //ビュー行列の作成
-        viewMatrix_ = XMMatrixLookAtLH(position_, target_, XMVectorSet(0, 1, 0, 0));
+    //プロジェクション行列
+    projMatrix_ = XMMatrixPerspectiveFovLH(XM_PIDIV4, (FLOAT)800 / (FLOAT)600, 0.1f, 100.0f);
+   
 }
 
 
 void Camera::Update()
 {
-    //プロジェクション行列
-        projMatrix_ = XMMatrixPerspectiveFovLH(XM_PIDIV4, (FLOAT)800 / (FLOAT)600, 0.1f, 100.0f);
+    //ビュー行列の作成
+
+      viewMatrix_ = XMMatrixLookAtLH(position_, target_, XMVectorSet(0, 1, 0, 0));
     
 }
 

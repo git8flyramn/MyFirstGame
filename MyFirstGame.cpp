@@ -8,6 +8,7 @@
 #include "Camera.h"
 //#include "Dice.h"
 #include "Sprite.h"
+#include "Transform.h"
 
 HWND hWnd = nullptr;
 
@@ -83,9 +84,10 @@ int APIENTRY wWinMain(_In_ HINSTANCE hInstance,
    /*Quad* q = new Quad();
    hr =  q->Initialize();*/
     Sprite* sprite = new Sprite();
+   // Transform* transform = new Transform();
    //Dice* dice = new Dice();
-   //hr = dice->Initialize();
-    hr = sprite->Initialize();
+  // hr = dice->Initialize();
+   hr = sprite->Initialize();
    if (FAILED(hr))
    {
        return 0;
@@ -101,10 +103,24 @@ int APIENTRY wWinMain(_In_ HINSTANCE hInstance,
             TranslateMessage(&msg);
             DispatchMessage(&msg);
         }
-        Camera::Update();
+        Camera::Update(); // カメラの更新
+
         Direct3D::BeginDraw();
 
+        Transform trans;
+        trans.position_.x = 1.0f;
+        trans.rotate_.z = 0.0f;
+        trans.Calculation();
+     //   sprite->Draw(XMMatrixRotaionY(45));
+       /* XMMATRIX trans;
+        XMMATRIX mat = XMMatrixRotationY(45);
+        sprite->Draw(mat);
+        Direct3D::EndDraw();
+        Camera::Update();
+        Direct3D::BeginDraw();*/
 
+    
+        //transform->Calclation();
         // 描画処理
       /*  Camera::Update();
         Direct3D::BeginDraw();
@@ -113,31 +129,31 @@ int APIENTRY wWinMain(_In_ HINSTANCE hInstance,
         timer += 0.03f;
         dice->Draw(dmat);
         Direct3D::EndDraw();*/
-             //  float timer = 0.0f;
-             ///*  XMMATRIX mat = XMMatrixRotationY(timer);
-             //  timer += 0.05f;
-             //  dice->Draw(mat);
-             //  Direct3D::EndDraw();*/
-             //  while (timer < 300)
-             //  {
-             //      Camera::Update();
-             //      Direct3D::BeginDraw();
-            //    XMMATRIX dmat = XMMatrixRotationY(XMConvertToRadians(RAD + timer));
-             //      dice->Draw(dmat);
-             //      timer += 0.03f;
-             //      Direct3D::EndDraw();
-             //  }
-        XMMATRIX mat = XMMatrixIdentity();
+             /*  float timer = 0.0f;
+               XMMATRIX mat = XMMatrixRotationY(timer);
+               timer += 0.05f;
+               dice->Draw(mat);
+               Direct3D::EndDraw();
+               while (timer < 300)
+               {
+                   Camera::Update();
+                   Direct3D::BeginDraw();
+                XMMATRIX dmat = XMMatrixRotationY(XMConvertToRadians(RAD + timer));
+                   dice->Draw(dmat);
+                   timer += 0.03f;
+                   Direct3D::EndDraw();
+               }*/
+       
         //Transform trans;
         //trans.positon.x
         //
-        sprite->Draw(mat);
-        Direct3D::EndDraw();
+       
     }
    // dice->Release();
   //  SAFE_DELETE(dice);
    // Direct3D::Release();
     sprite->Release();
+    SAFE_DELETE(sprite);
     Direct3D::Release();
    
     return (int) msg.wParam;

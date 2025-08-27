@@ -7,11 +7,7 @@
 #pragma comment(lib, "DirectXTex.lib")
 using namespace DirectX;
 
-Dice::Dice()
-	: pVertexBuffer_(nullptr),
-	pIndexBuffer_(nullptr),
-	pConstantBuffer_(nullptr),
-	pTexture_(nullptr)
+Dice::Dice() : Quad()
 {
 	
 }
@@ -22,7 +18,6 @@ Dice::~Dice()
 
 HRESULT Dice::Initialize()
 {
-	HRESULT hr;
 	VERTEX vertices[] =
 	{
 		
@@ -47,12 +42,14 @@ HRESULT Dice::Initialize()
 		{{1.0f,   1.0f, +1.0f, 0.0f}, {0.5f,  0.5f},{0.0f,0.0f, 1.0f,0.0f}},  // 四角形の頂点（右上）
 		{{1.0f,  -1.0f, +1.0f, 0.0f}, {0.5f,  1.0f},{0.0f,0.0f, 1.0f,0.0f}},  // 四角形の頂点（右下）
 		{{-1.0f, -1.0f, +1.0f, 0.0f}, { 0.25f,1.0f},{0.0f,0.0f, 1.0f,0.0f}},   // 四角形の頂点（左下
-	  
+	     
+		//右面
 		{{1.0f,   1.0f,-1.0f,0.0f},   {0.0f, 1.0f}}, 
 		{{1.0f,   1.0f, +1.0f,0.0f},  {0.0f ,0.5f}},
 		{{1.0f,  -1.0f, 1.0f,0.0f},   {0.25f,0.5f}},
 		{{1.0f,  -1.0f,-1.0f,0.0f},   {0.25f, 1.0f}},
-
+		
+		//左面
 		{{-1.0f,  1.0f,-1.0f,0.0f},   {0.5f,0.0f}},
 		{{-1.0f,  1.0f, +1.0f,0.0f},  {0.25f,0.0f}},
 		{{-1.0f, -1.0f, 1.0f,0.0f},   {0.25f,0.5f}},
@@ -63,7 +60,8 @@ HRESULT Dice::Initialize()
 		{{  1.0f,1.0f,  1.0f, 0.0f},  {0.75f,0.0f}},
 		{{  1.0f,1.0f ,-1.0f, 0.0f},  {0.75f,0.5f}},
 		{{-1.0f,1.0f,  -1.0f, 0.0f},  {0.5f,0.5f}},
-	    //下
+	    
+		//底面
 		{{ -1.0f,-1.0f,1.0f,0.0f},    {0.75f,0.0f}},
 		{{  1.0f,-1.0f,1.0f,0.0f},    {1.0f,0.0f}},
 		{{  1.0f,-1.0f,-1.0f,0.0f},   {1.0f,0.5f}},
@@ -84,6 +82,7 @@ HRESULT Dice::Initialize()
 	}; //CW
 	//const int numVertex = sizeof(vertices) / sizeof(vertices[0]);
 	//頂点データ用バッファの設定
+	HRESULT hr;
 	D3D11_BUFFER_DESC bd_vertex;
 	bd_vertex.ByteWidth = sizeof(vertices);
 	bd_vertex.Usage = D3D11_USAGE_DEFAULT;
@@ -149,7 +148,7 @@ HRESULT Dice::Initialize()
 
 void Dice::Draw(DirectX::XMMATRIX& worldMatrix)
 {
-	Direct3D::SetShader(SHADER_3D); //シェーダーの設定
+	//Direct3D::SetShader(SHADER_3D); //シェーダーの設定
 
 	//コンスタントバッファに渡す情報
 	CONSTANT_BUFFER cb;

@@ -115,7 +115,8 @@ HRESULT Direct3D::InitShader2D()
    /* hr = pDevice->CreateVertexShader(pCompileVS->GetBufferPointer(),
                                      pCompileVS->GetBufferSize(), 
                                      NULL,&(shaderBundle[SHADER_2D].pVertexShader));*/
-    hr = pDevice->CreateVertexShader(pCompileVS->GetBufferPointer(), pCompileVS->GetBufferSize(), NULL, &(shaderBundle[SHADER_2D].pVertexShader));
+    hr = pDevice->CreateVertexShader(pCompileVS->GetBufferPointer(), pCompileVS->GetBufferSize(), 
+                                      NULL, &(shaderBundle[SHADER_2D].pVertexShader));
 
 
     if (FAILED(hr))

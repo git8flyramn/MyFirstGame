@@ -1,10 +1,8 @@
 #include "Transform.h"
 
-Transform::Transform() :position_(0.0f, 0.0f, 0.0f), rotate_(0.0f, 0.0f, 0.0f), scale_(0.0f, 0.0f, 0.0f)
+Transform::Transform()
 {
-    matTranslate_ = XMMatrixIdentity();
-    matRotate_ = XMMatrixIdentity();
-    matScale_ = XMMatrixIdentity();
+
 }
 Transform::~Transform()
 {
@@ -12,15 +10,18 @@ Transform::~Transform()
 }
 
 //äeçsóÒÇÃåvéZ
-void Transform::Calclation()
+void Transform::Calculation()
 {
-    position_ = matTranslate_();
+
+    matTranslate_ = XMMatrixTranslation(position_.x, position_.y, position_.y);
+    matScale_ = XMMatrixScaling(scale_.x, scale_.y, scale_.z);
 }
 
-XMMATRIX Transform::GetWorldMatrix(XMFLOAT3 worldmatrix)
+
+XMMATRIX Transform::GetWorldMatrix(XMMATRIX worldmatrix)
 {
-    
-    return XMMATRIX();
+    worldmatrix =  matTranslate_ * matScale_ * matRotate_;
+    return XMMATRIX(worldmatrix);
 }
 
 
