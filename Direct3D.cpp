@@ -31,10 +31,10 @@ HRESULT Direct3D::InitShader()
     {
         return E_FAIL;
     }
-   /* if (FAILED(InitShader2D))
+    if (FAILED(InitShader2D))
     {
         return E_FAIL;
-    }*/
+    }
     return S_OK;
 }
 
@@ -112,8 +112,11 @@ HRESULT Direct3D::InitShader2D()
     D3DCompileFromFile(L"Simple2D.hlsl", nullptr, nullptr, "VS", "vs_5_0", NULL, 0, &pCompileVS, NULL);
     assert(pCompileVS != nullptr);
 
-    hr = pDevice->CreateVertexShader(pCompileVS->GetBufferPointer(), pCompileVS->GetBufferSize(), 
-                                     NULL,&(shaderBundle[SHADER_2D].pVertexShader));
+   /* hr = pDevice->CreateVertexShader(pCompileVS->GetBufferPointer(),
+                                     pCompileVS->GetBufferSize(), 
+                                     NULL,&(shaderBundle[SHADER_2D].pVertexShader));*/
+    hr = pDevice->CreateVertexShader(pCompileVS->GetBufferPointer(), pCompileVS->GetBufferSize(), NULL, &(shaderBundle[SHADER_2D].pVertexShader));
+
 
     if (FAILED(hr))
     {
@@ -144,6 +147,7 @@ HRESULT Direct3D::InitShader2D()
 
     if (FAILED(hr))
     {
+        MessageBox(nullptr, L"頂点インプットレイアウトの作成に失敗しました", L"エラー", MB_OK);
         return hr;
     }
     pCompileVS->Release();
@@ -182,6 +186,7 @@ HRESULT Direct3D::Initialize(int winW, int winH, HWND hWnd)
     //Direct3Dの初期化
     DXGI_SWAP_CHAIN_DESC scDesc = {};
     ZeroMemory(&scDesc, sizeof(scDesc));
+    //描画先のフォーマット
     scDesc.BufferDesc.Width = winW;
     scDesc.BufferDesc.Height = winH;
     scDesc.BufferDesc.Format = DXGI_FORMAT_R8G8B8A8_UNORM;

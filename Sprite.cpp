@@ -1,11 +1,9 @@
 #include "Sprite.h"
-
 #include "Camera.h"
 #include "Texture.h"
 
 Sprite::Sprite() : pVertexBuffer_(nullptr), pIndexBuffer_(nullptr),
 pConstantBuffer_(nullptr), pTexture_(nullptr)
-
 {
 }
 
@@ -81,7 +79,7 @@ HRESULT Sprite::Initialize()
 	}
 
 	pTexture_ = new Texture();
-	pTexture_->Load("dice1.png");
+	pTexture_->Load("Dice1.png");
 	return S_OK;
 }
 

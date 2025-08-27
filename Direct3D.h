@@ -5,6 +5,8 @@
 #define SAFE_DELETE(p) if(p != nullptr){ delete p; p = nullptr;}
 #define SAFE_RELEASE(p) if(p != nullptr){ p->Release(); p = nullptr;}
 //リンカ
+#pragma comment (lib,"d3d11.lib")
+#pragma comment(lib, "d3dcompiler.lib")
 enum SHADER_TYPE
 {
 	SHADER_3D,//3d用シェーダ
@@ -12,8 +14,7 @@ enum SHADER_TYPE
 	SHADER_MAX //シェーダの最大数
 };
 
-#pragma comment (lib,"d3d11.lib")
-#pragma comment(lib, "d3dcompiler.lib")
+
 namespace Direct3D
 {
 	//externはどこかに実際の定義(宣言)文あるぞっていう宣言

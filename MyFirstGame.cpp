@@ -8,6 +8,7 @@
 #include "Camera.h"
 //#include "Dice.h"
 #include "Sprite.h"
+
 HWND hWnd = nullptr;
 
 #define MAX_LOADSTRING 100
@@ -75,6 +76,7 @@ int APIENTRY wWinMain(_In_ HINSTANCE hInstance,
         return 0;
     }
     Camera::Initialize();
+    
     HACCEL hAccelTable = LoadAccelerators(hInstance, MAKEINTRESOURCE(IDC_MYFIRSTGAME));
 
     MSG msg = {};
@@ -88,7 +90,7 @@ int APIENTRY wWinMain(_In_ HINSTANCE hInstance,
    {
        return 0;
    }
-    ZeroMemory(&msg, sizeof(msg));
+  //  ZeroMemory(&msg, sizeof(msg));
     // メイン メッセージ ループ:　ユーザー操作(クリックやキー入力)を受け取り、処理を続ける仕組み
     while (msg.message != WM_QUIT)
     {
@@ -120,12 +122,15 @@ int APIENTRY wWinMain(_In_ HINSTANCE hInstance,
              //  {
              //      Camera::Update();
              //      Direct3D::BeginDraw();
-             //      XMMATRIX dmat = XMMatrixRotationY(XMConvertToRadians(RAD + timer));
+            //    XMMATRIX dmat = XMMatrixRotationY(XMConvertToRadians(RAD + timer));
              //      dice->Draw(dmat);
              //      timer += 0.03f;
              //      Direct3D::EndDraw();
              //  }
         XMMATRIX mat = XMMatrixIdentity();
+        //Transform trans;
+        //trans.positon.x
+        //
         sprite->Draw(mat);
         Direct3D::EndDraw();
     }
