@@ -95,7 +95,7 @@ void Quad::Draw(XMMATRIX& worldMatrix)
 	//コンスタントバッファに渡す情報
 	CONSTANT_BUFFER cb;
 	cb.matWVP = XMMatrixTranspose(worldMatrix * Camera::GetViewMatrix() * Camera::GetProjectionMatrix());
-
+	
 
 
 	D3D11_MAPPED_SUBRESOURCE pdata;
