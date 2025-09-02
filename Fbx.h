@@ -21,7 +21,7 @@ public:
 	void InitVertex(FbxMesh* mesh);
 	void InitIndex(FbxMesh* mesh);
 	void IntConstantBuffer();
-	void InitMaterial(FbxNode* node);
+	void InitMaterial(FbxNode* pNode);
 private:
 
 	struct MATERIAL
@@ -38,11 +38,12 @@ private:
 	struct VERTEX
 	{
 		XMVECTOR position;
+		XMVECTOR uv;
 	};
 
-	ID3D11Buffer* pVertexBuffer_; //頂点バッファ
-	ID3D11Buffer* pIndexBuffer_;  //インデックスバッファ
-	ID3D11Buffer* pConstantBuffer_;//コンスタントバッファ
+	ID3D11Buffer *pVertexBuffer_; //頂点バッファ
+	ID3D11Buffer **pIndexBuffer_;  //インデックスバッファ
+	ID3D11Buffer *pConstantBuffer_;//コンスタントバッファ
 	std::vector<MATERIAL> materialList_;
 
 	int vertexCount_;	//頂点数

@@ -29,4 +29,9 @@ XMMATRIX Transform::GetWorldMatrix()
     return matTranslate_ * matScale_ * matRotate_;
 }
 
+XMMATRIX Transform::GetNomalMatrix()
+{
+    return matRotate_ * XMMatrixInverse(nullptr,matScale_);
+}
+
 

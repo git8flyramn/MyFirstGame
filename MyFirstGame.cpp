@@ -110,6 +110,8 @@ int APIENTRY wWinMain(_In_ HINSTANCE hInstance,
         Camera::Update(); // カメラの更新
 
         Direct3D::BeginDraw();
+
+
         Transform trans;
         trans.position_.x = 1.0f;
         trans.rotate_.z = 0.0f;
@@ -122,13 +124,6 @@ int APIENTRY wWinMain(_In_ HINSTANCE hInstance,
      //   sprite->Draw(XMMatrixRotaionY(45));
        /* XMMATRIX trans;
         XMMATRIX mat = XMMatrixRotationY(45);
-        sprite->Draw(mat);
-        Direct3D::EndDraw();
-        Camera::Update();
-        Direct3D::BeginDraw();*/
-
-    
-        //transform->Calclation();
         // 描画処理
       /*  Camera::Update();
         Direct3D::BeginDraw();
