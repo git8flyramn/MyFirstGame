@@ -26,5 +26,5 @@ public:
 	void Calculation();
 
 	//ƒ[ƒ‹ƒhs—ñ‚ğæ“¾
-	XMMATRIX GetWorldMatrix(XMMATRIX worldmatrix);
+	XMMATRIX GetWorldMatrix();
 };

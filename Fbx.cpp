@@ -32,7 +32,8 @@ HRESULT Fbx::Load(std::string fileName)
 
 	vertexCount_ = mesh->GetControlPointsCount();	//頂点の数
     polygonCount_ = mesh->GetPolygonCount();	//ポリゴンの数
-	
+	materialCount_ = pNode->GetMaterialCount(); //マテリアルの数
+
 	InitVertex(mesh);
 	InitIndex(mesh);
 	IntConstantBuffer();

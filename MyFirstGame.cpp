@@ -7,7 +7,7 @@
 //#include "Quad.h"
 #include "Camera.h"
 //#include "Dice.h"
-#include "Sprite.h"
+//#include "Sprite.h"
 #include "Fbx.h"
 #include "Transform.h"
 
@@ -86,6 +86,7 @@ int APIENTRY wWinMain(_In_ HINSTANCE hInstance,
    hr =  q->Initialize();*/
     //Sprite* sprite = new Sprite();
     Fbx* fbx = new Fbx();
+    fbx->Load("oden.fbx");
    // Transform* transform = new Transform();
    //Dice* dice = new Dice();
   // hr = dice->Initialize();
@@ -109,8 +110,11 @@ int APIENTRY wWinMain(_In_ HINSTANCE hInstance,
         Camera::Update(); // カメラの更新
 
         Direct3D::BeginDraw();
-        fbx->Load("oden.fbx");
-
+        Transform trans;
+        trans.position_.x = 1.0f;
+        trans.rotate_.z = 0.0f;
+        trans.Calculation();
+        fbx->Draw(trans);
         //Transform trans;
         //trans.position_.x = 1.0f;
         //trans.rotate_.z = 0.0f;
@@ -148,9 +152,7 @@ int APIENTRY wWinMain(_In_ HINSTANCE hInstance,
                    Direct3D::EndDraw();
                }*/
        
-        //Transform trans;
-        //trans.positon.x
-        //
+        Direct3D::EndDraw();
        
     }
    // dice->Release();
@@ -158,8 +160,8 @@ int APIENTRY wWinMain(_In_ HINSTANCE hInstance,
    // Direct3D::Release();
     //sprite->Release();
     //SAFE_DELETE(sprite);
-    fbx->Release();
-    SAFE_DELETE(fbx);
+   /* fbx->Release();
+    SAFE_DELETE(fbx);*/
     Direct3D::Release();
    
     return (int) msg.wParam;
