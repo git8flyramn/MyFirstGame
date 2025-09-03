@@ -64,7 +64,7 @@ VS_OUT VS(float4 pos : POSITION, float4 uv : TEXCOORD, float4 normal : NOMAL)
 float4 PS(VS_OUT inData) : SV_Target
 {
     float4 color;
-    if(useTexture)
+    if(useTexture == 1)
     {
         color = g_texture.Sample(g_sampler, inData.uv) * inData.color;
     }
