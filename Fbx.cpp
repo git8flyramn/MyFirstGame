@@ -122,7 +122,7 @@ void Fbx::InitIndex(FbxMesh* mesh)
 {
 	pIndexBuffer_ = new ID3D11Buffer * [materialCount_];
 	int* index = new int[polygonCount_ * 3];
-	//indexCount_ = std::vector<int>;
+	indexCount_ = std::vector<int>(materialCount_);
 
 	for (int i = 0; i < materialCount_; i++)
 	{
@@ -235,6 +235,8 @@ void Fbx::InitMaterial(FbxNode* pNode)
 		{
 			//テクスチャ無しの時の処理
 			materialList_[i].pTexture = nullptr;
+           //マテリアルの色　Lambert
+			FbxDouble3 color = ((FbxSurfaceLambert*)pMaterial)->Diffuse.Get(); 
 		}
 	}
 }
@@ -242,16 +244,28 @@ void Fbx::Draw(Transform& transform)
 {
 	Direct3D::SetShader(SHADER_3D);
 	transform.Calculation();
-	pIndexBuffer_ = new ID3D11Buffer * [materialCount_];
+	//pIndexBuffer_ = new ID3D11Buffer * [materialCount_];
 
 	CONSTANT_BUFFER cb;
 	cb.matWVP = XMMatrixTranspose(transform.GetWorldMatrix() * Camera::GetViewMatrix() * Camera::GetProjectionMatrix());
 	cb.matNormal = transform.GetNomalMatrix();
+	  
+	/*for (int i = 0; i < materialCount_; i++)
+	{
+		if (materialList_[i].pTexture)
+		{
+			cb.materialFlag = TRUE;
+			cb.diffuse = XMFLOAT4(1, 1, 1, 1);
+	    }
+		else
+		{
+			cb.materialFlag = FALSE;
+			cb.diffuse = materialList_[i].diffuse;
+		}
+    }*/
 
-
-	D3D11_MAPPED_SUBRESOURCE pdata;
-	Direct3D::pContext->Map(pConstantBuffer_, 0, D3D11_MAP_WRITE_DISCARD, 0, &pdata);	// GPUからのデータアクセスを止める
-	memcpy_s(pdata.pData, pdata.RowPitch, (void*)(&cb), sizeof(cb));	// データを値を送る
+	
+	
 	Direct3D::pContext->Unmap(pConstantBuffer_, 0);	//再開
 
 	//頂点バッファ
@@ -262,6 +276,22 @@ void Fbx::Draw(Transform& transform)
 
 	for (int i = 0; i < materialCount_; i++)
 	{
+		if (materialList_[i].pTexture)
+		{
+			cb.materialFlag = TRUE;
+			cb.diffuse = XMFLOAT4(1, 1, 1, 1);
+		}
+		else
+		{
+			cb.materialFlag = FALSE;
+			cb.diffuse = materialList_[i].diffuse;
+		}
+
+		D3D11_MAPPED_SUBRESOURCE pdata;
+		Direct3D::pContext->Map(pConstantBuffer_, 0, D3D11_MAP_WRITE_DISCARD, 0, &pdata);	// GPUからのデータアクセスを止める
+		memcpy_s(pdata.pData, pdata.RowPitch, (void*)(&cb), sizeof(cb));	// データを値を送る
+
+
 		// インデックスバッファーをセット
 		stride = sizeof(int);
 		offset = 0;
@@ -270,6 +300,7 @@ void Fbx::Draw(Transform& transform)
 		//コンスタントバッファ
 		Direct3D::pContext->VSSetConstantBuffers(0, 1, &pConstantBuffer_);	//頂点シェーダー用	
 		Direct3D::pContext->PSSetConstantBuffers(0, 1, &pConstantBuffer_);	//ピクセルシェーダー用
+		
 		if (materialList_[i].pTexture)
 		{
 			ID3D11SamplerState* pSampler = materialList_[i].pTexture->GetSampler();

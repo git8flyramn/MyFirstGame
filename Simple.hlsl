@@ -13,9 +13,10 @@ SamplerState g_sampler : register(s0); //サンプラー
 cbuffer global
 {
     float4x4 matWVP; // ワールド・ビュー・プロジェクションの合成行列
-    //ワールド行列
     float4x4 matNomal;
-    float4x4 matWorld;
+    float4   diffuseColor;
+    bool     useTexture;
+    
 };
 
 //───────────────────────────────────────
@@ -62,7 +63,15 @@ VS_OUT VS(float4 pos : POSITION, float4 uv : TEXCOORD, float4 normal : NOMAL)
 //───────────────────────────────────────
 float4 PS(VS_OUT inData) : SV_Target
 {
-    float4 color = g_texture.Sample(g_sampler, inData.uv) * inData.color;
-    //float4 ret = float(inData.uv.x,inData.uv.y,0,1;
+    float4 color;
+    if(useTexture)
+    {
+        color = g_texture.Sample(g_sampler, inData.uv) * inData.color;
+    }
+    else
+    {
+        color = float4(1, 1, 1, 1);
+    }
     return color;
+    //float4 ret = float(inData.uv.x,inData.uv.y,0,1;
 }
