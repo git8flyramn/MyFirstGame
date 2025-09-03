@@ -13,7 +13,7 @@ SamplerState g_sampler : register(s0); //サンプラー
 cbuffer global
 {
     float4x4 matWVP; // ワールド・ビュー・プロジェクションの合成行列
-    //float4x4 matW; //ワールド行列
+    //ワールド行列
     float4x4 matNomal;
     float4x4 matWorld;
 };

@@ -27,11 +27,16 @@ private:
 	struct MATERIAL
 	{
 		Texture* pTexture;
+		XMFLOAT4 diffuse;
 	};
 	struct CONSTANT_BUFFER
 	{
-		XMMATRIX	matWVP;
-		XMMATRIX	matNormal;
+		XMMATRIX   matWVP;
+		XMMATRIX   matNormal;
+		XMFLOAT4   diffuse;
+		BOOL     materialFlag; //マテリアルがあるかないか
+	
+
 	};
 
 	//本来はXMFLOAT～である
@@ -39,12 +44,14 @@ private:
 	{
 		XMVECTOR position;
 		XMVECTOR uv;
+		XMVECTOR normal;
 	};
 
 	ID3D11Buffer *pVertexBuffer_; //頂点バッファ
 	ID3D11Buffer **pIndexBuffer_;  //インデックスバッファ
 	ID3D11Buffer *pConstantBuffer_;//コンスタントバッファ
 	std::vector<MATERIAL> materialList_;
+	std::vector<int> indexCount_;
 
 	int vertexCount_;	//頂点数
 	int polygonCount_;	//ポリゴン数

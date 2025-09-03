@@ -86,7 +86,7 @@ int APIENTRY wWinMain(_In_ HINSTANCE hInstance,
    hr =  q->Initialize();*/
     //Sprite* sprite = new Sprite();
     Fbx* fbx = new Fbx();
-    fbx->Load("oden.fbx");
+    fbx->Load("ODEN1.fbx");
    // Transform* transform = new Transform();
    //Dice* dice = new Dice();
   // hr = dice->Initialize();
@@ -114,40 +114,11 @@ int APIENTRY wWinMain(_In_ HINSTANCE hInstance,
 
         Transform trans;
         trans.position_.x = 1.0f;
-        trans.rotate_.z = 0.0f;
+        trans.rotate_.z  = 0.0f;
+        //trans.rotate_.y += +1.0f;
         trans.Calculation();
-        fbx->Draw(trans);
-        //Transform trans;
-        //trans.position_.x = 1.0f;
-        //trans.rotate_.z = 0.0f;
-        //trans.Calculation();
-     //   sprite->Draw(XMMatrixRotaionY(45));
-       /* XMMATRIX trans;
-        XMMATRIX mat = XMMatrixRotationY(45);
-        // 描画処理
-      /*  Camera::Update();
-        Direct3D::BeginDraw();
-        float timer = 0.0f;
-        XMMATRIX dmat = XMMatrixRotationY(XMConvertToRadians(RAD + timer));
-        timer += 0.03f;
-        dice->Draw(dmat);
-        Direct3D::EndDraw();*/
-             /*  float timer = 0.0f;
-               XMMATRIX mat = XMMatrixRotationY(timer);
-               timer += 0.05f;
-               dice->Draw(mat);
-               Direct3D::EndDraw();
-               while (timer < 300)
-               {
-                   Camera::Update();
-                   Direct3D::BeginDraw();
-                XMMATRIX dmat = XMMatrixRotationY(XMConvertToRadians(RAD + timer));
-                   dice->Draw(dmat);
-                   timer += 0.03f;
-                   Direct3D::EndDraw();
-               }*/
-       
-        Direct3D::EndDraw();
+        fbx->Draw(trans);   
+       Direct3D::EndDraw();
        
     }
    // dice->Release();
@@ -201,7 +172,7 @@ ATOM MyRegisterClass(HINSTANCE hInstance)
     
     //ウィンドウのクライアント領域の背景色
     //wcex.hbrBackground  = (HBRUSH)(COLOR_WINDOW+1);
-    wcex.hbrBackground = (HBRUSH)(COLOR_WINDOW + 15);
+    wcex.hbrBackground = (HBRUSH)(COLOR_WINDOW + 1);
     
     //ウィンドウに関連付けられたメニューの名前
     wcex.lpszMenuName = NULL;

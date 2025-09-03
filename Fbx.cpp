@@ -2,19 +2,32 @@
 #include "Direct3D.h"
 #include "Camera.h"
 #include <filesystem>
+#include <string>
 namespace fs = std::filesystem;
 Fbx::Fbx(): pVertexBuffer_(nullptr),
             pIndexBuffer_(nullptr),
             pConstantBuffer_(nullptr),
             vertexCount_(0),
             polygonCount_(0),
-	        materialCount_(0)
+	        materialCount_(0),
+	        indexCount_(0)
 {
 
 }
 
 HRESULT Fbx::Load(std::string fileName)
 {
+	//おでんが描画されている状態で必要な物
+	std::string subDir("Assets");
+	fs::path currPath, basePath;
+	currPath = fs::current_path();
+	basePath = currPath;
+	currPath = currPath / subDir;
+	//fs::path subPath(currPath.string() + "\\" + subDir);
+	assert(fs::exists(currPath)); //subPathはある 存在確認
+	fs::current_path(currPath);
+
+
 	//マネージャを生成
 	FbxManager* pFbxManager = FbxManager::Create();
 
@@ -43,6 +56,8 @@ HRESULT Fbx::Load(std::string fileName)
 	vertexCount_ = mesh->GetControlPointsCount();	//頂点の数
     polygonCount_ = mesh->GetPolygonCount();	//ポリゴンの数
 	materialCount_ = pNode->GetMaterialCount(); //マテリアルの数
+
+	
 
 	InitVertex(mesh);
 	InitIndex(mesh);
@@ -77,6 +92,12 @@ void Fbx::InitVertex(FbxMesh* mesh)
 			int uvIndex = mesh->GetTextureUVIndex(poly, vertex, FbxLayerElement::eTextureDiffuse);
 			FbxVector2  uv = pUV->GetDirectArray().GetAt(uvIndex);
 			vertices[index].uv = XMVectorSet((float)uv.mData[0], (float)(1.0f - uv.mData[1]), 0.0f, 0.0f);
+		   
+			//頂点の法線
+			FbxVector4 normal;
+			mesh->GetPolygonVertexNormal(poly, vertex, normal);
+			vertices[index].normal 
+			= { (float)normal[0],(float)normal[1],(float)normal[2],0.0f };
 		}
 	}
 	HRESULT hr;
@@ -101,6 +122,7 @@ void Fbx::InitIndex(FbxMesh* mesh)
 {
 	pIndexBuffer_ = new ID3D11Buffer * [materialCount_];
 	int* index = new int[polygonCount_ * 3];
+	//indexCount_ = std::vector<int>;
 
 	for (int i = 0; i < materialCount_; i++)
 	{
@@ -206,7 +228,6 @@ void Fbx::InitMaterial(FbxNode* pNode)
 			else
 			{
 				//テクスチャファイルがない時の処理
-				//materialList_[i].pTexture = nullptr;
 			}
 		}
 		//テクスチャ無し
@@ -220,11 +241,12 @@ void Fbx::InitMaterial(FbxNode* pNode)
 void Fbx::Draw(Transform& transform)
 {
 	Direct3D::SetShader(SHADER_3D);
-	pIndexBuffer_ = new ID3D11Buffer * [materialCount_];
 	transform.Calculation();
+	pIndexBuffer_ = new ID3D11Buffer * [materialCount_];
+
 	CONSTANT_BUFFER cb;
 	cb.matWVP = XMMatrixTranspose(transform.GetWorldMatrix() * Camera::GetViewMatrix() * Camera::GetProjectionMatrix());
-	cb.matNormal = XMMatrixIdentity();
+	cb.matNormal = transform.GetNomalMatrix();
 
 
 	D3D11_MAPPED_SUBRESOURCE pdata;
@@ -257,7 +279,7 @@ void Fbx::Draw(Transform& transform)
 			Direct3D::pContext->PSSetShaderResources(0, 1, &pSRV);
 		}
 		//描画
-		Direct3D::pContext->DrawIndexed(polygonCount_ * 3, 0, 0);
+		Direct3D::pContext->DrawIndexed(indexCount_[i]* 3, 0, 0);
 	}
 }
 
