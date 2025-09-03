@@ -27,7 +27,7 @@ namespace Direct3D
 
 HRESULT Direct3D::InitShader()
 {
-    if (FAILED(InitShader3D))
+    if(FAILED(InitShader3D))
     {
         return E_FAIL;
     }
@@ -129,6 +129,7 @@ HRESULT Direct3D::InitShader2D()
     ID3DBlob* pCompilePS = nullptr;
     D3DCompileFromFile(L"Simple2D.hlsl", nullptr, nullptr, "PS", "ps_5_0", NULL, 0, &pCompilePS, NULL);
     assert(pCompilePS != nullptr);
+
     hr = pDevice->CreatePixelShader(pCompilePS->GetBufferPointer(), 
          pCompilePS->GetBufferSize(), NULL, &(shaderBundle[SHADER_2D].pPixelShader));
     if (FAILED(hr))
@@ -226,7 +227,6 @@ HRESULT Direct3D::Initialize(int winW, int winH, HWND hWnd)
 
     //レンダーターゲットビューを作成
     pDevice->CreateRenderTargetView(pBackBuffer, NULL, &pRenderTargetView);
-
     //一時的にバックバッファを取得しただけなので解放
     pBackBuffer->Release();
 

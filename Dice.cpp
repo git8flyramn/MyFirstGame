@@ -7,7 +7,10 @@
 #pragma comment(lib, "DirectXTex.lib")
 using namespace DirectX;
 
-Dice::Dice() : Quad()
+Dice::Dice() : pVertexBuffer_(nullptr),
+              pIndexBuffer_(nullptr),
+             pConstantBuffer_(nullptr),
+             pTexture_(nullptr)
 {
 	
 }

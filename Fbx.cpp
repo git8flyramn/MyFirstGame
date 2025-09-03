@@ -7,7 +7,8 @@ Fbx::Fbx(): pVertexBuffer_(nullptr),
             pIndexBuffer_(nullptr),
             pConstantBuffer_(nullptr),
             vertexCount_(0),
-            polygonCount_(0)
+            polygonCount_(0),
+	        materialCount_(0)
 {
 
 }
@@ -235,18 +236,29 @@ void Fbx::Draw(Transform& transform)
 	UINT stride = sizeof(VERTEX);
 	UINT offset = 0;
 	Direct3D::pContext->IASetVertexBuffers(0, 1, &pVertexBuffer_, &stride, &offset);
+    
 
-	// インデックスバッファーをセット
-	stride = sizeof(int);
-	offset = 0;
-	Direct3D::pContext->IASetIndexBuffer(pIndexBuffer_, DXGI_FORMAT_R32_UINT, 0);
+	for (int i = 0; i < materialCount_; i++)
+	{
+		// インデックスバッファーをセット
+		stride = sizeof(int);
+		offset = 0;
+		Direct3D::pContext->IASetIndexBuffer(pIndexBuffer_[i], DXGI_FORMAT_R32_UINT, 0);
 
-	//コンスタントバッファ
-	Direct3D::pContext->VSSetConstantBuffers(0, 1, &pConstantBuffer_);	//頂点シェーダー用	
-	Direct3D::pContext->PSSetConstantBuffers(0, 1, &pConstantBuffer_);	//ピクセルシェーダー用
+		//コンスタントバッファ
+		Direct3D::pContext->VSSetConstantBuffers(0, 1, &pConstantBuffer_);	//頂点シェーダー用	
+		Direct3D::pContext->PSSetConstantBuffers(0, 1, &pConstantBuffer_);	//ピクセルシェーダー用
+		if (materialList_[i].pTexture)
+		{
+			ID3D11SamplerState* pSampler = materialList_[i].pTexture->GetSampler();
+			Direct3D::pContext->PSSetSamplers(0, 1, &pSampler);
 
-	Direct3D::pContext->DrawIndexed(polygonCount_ * 3, 0, 0);
-
+			ID3D11ShaderResourceView* pSRV = materialList_[i].pTexture->GetSRV();
+			Direct3D::pContext->PSSetShaderResources(0, 1, &pSRV);
+		}
+		//描画
+		Direct3D::pContext->DrawIndexed(polygonCount_ * 3, 0, 0);
+	}
 }
 
 void Fbx::Release()

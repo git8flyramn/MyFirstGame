@@ -48,7 +48,7 @@ private:
 
 	int vertexCount_;	//頂点数
 	int polygonCount_;	//ポリゴン数
-	int materialCount_;
+	int materialCount_; //マテリアルの数
 
 
 };
