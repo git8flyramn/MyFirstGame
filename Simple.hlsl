@@ -15,7 +15,7 @@ cbuffer global
     float4x4 matWVP; // ワールド・ビュー・プロジェクションの合成行列
     float4x4 matNomal;
     float4   diffuseColor;
-    bool     useTexture;
+    bool     useTexture; //テクスチャを使うかどうか
     
 };
 
@@ -43,17 +43,15 @@ VS_OUT VS(float4 pos : POSITION, float4 uv : TEXCOORD, float4 normal : NOMAL)
     //法線を回転
     //nomal = matW;
     outData.pos = mul(pos, matWVP);
-    outData.uv = uv.xy;//UV座標はそのまま
+    outData.uv = uv.xy;
     
-    normal = mul(normal, matNomal);//法線ベクトルをワールドビュー・プロジェクション行列で変換
-   
-    normal = normalize(normal);//法線ベクトルを正規化=長さ1に
-    normal.w = 0;//w成分は0にする
-    
-    float light = float4(-1, 0.5, -0.7, 0);
+    normal = mul(normal, matNomal); //法線ベクトルをワールドビュープロジェクション行列で変換
+    normal = normalize(normal);
+    normal.w = 0;
+    float4 light = float4(-1, 0.5, -0.7, 0);
     light = normalize(light);
-    
-    outData.color = dot(normal, light);
+    light.w = 0;
+    outData.color = clamp(dot(normal, light), 0, 1);
     
     return outData;
 }

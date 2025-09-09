@@ -86,9 +86,9 @@ int APIENTRY wWinMain(_In_ HINSTANCE hInstance,
    hr =  q->Initialize();*/
     //Sprite* sprite = new Sprite();
     Fbx* fbx = new Fbx();
-    fbx->Load("ODEN1.fbx");
+   fbx->Load("ODEN1.fbx");
    // Transform* transform = new Transform();
-   //Dice* dice = new Dice();
+ //  Dice* dice = new Dice();
   // hr = dice->Initialize();
   // hr = sprite->Initialize();
  
@@ -110,15 +110,16 @@ int APIENTRY wWinMain(_In_ HINSTANCE hInstance,
         Camera::Update(); // カメラの更新
 
         Direct3D::BeginDraw();
+  
 
-
-        Transform trans;
+       /* static Transform trans;
         trans.position_.x = 1.0f;
+        trans.position_.y += 0.1f;
         trans.rotate_.z  = 0.0f;
-        //trans.rotate_.y += +1.0f;
+        trans.rotate_.y += +1.0f;
         trans.Calculation();
         fbx->Draw(trans);   
-       Direct3D::EndDraw();
+       Direct3D::EndDraw();*/
        
     }
    // dice->Release();

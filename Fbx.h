@@ -18,6 +18,7 @@ public:
 	HRESULT Load(std::string fileName);
 	void    Draw(Transform& transform);
 	void    Release();
+
 	void InitVertex(FbxMesh* mesh);
 	void InitIndex(FbxMesh* mesh);
 	void IntConstantBuffer();
@@ -50,8 +51,8 @@ private:
 	ID3D11Buffer *pVertexBuffer_; //頂点バッファ
 	ID3D11Buffer **pIndexBuffer_;  //インデックスバッファ
 	ID3D11Buffer *pConstantBuffer_;//コンスタントバッファ
-	std::vector<MATERIAL> materialList_;
 	std::vector<int> indexCount_;
+	std::vector<MATERIAL> materialList_;
 
 	int vertexCount_;	//頂点数
 	int polygonCount_;	//ポリゴン数
