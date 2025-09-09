@@ -33,7 +33,7 @@ struct VS_OUT
 //───────────────────────────────────────
 // 頂点シェーダ
 //───────────────────────────────────────
-VS_OUT VS(float4 pos : POSITION, float4 uv : TEXCOORD, float4 normal : NOMAL)
+VS_OUT VS(float4 pos : POSITION, float4 uv : TEXCOORD, float4 normal : NORMAL)
 {
 	//ピクセルシェーダーへ渡す情報
     VS_OUT outData;
@@ -46,7 +46,7 @@ VS_OUT VS(float4 pos : POSITION, float4 uv : TEXCOORD, float4 normal : NOMAL)
     outData.uv = uv.xy;
     
     normal = mul(normal, matNomal); //法線ベクトルをワールドビュープロジェクション行列で変換
-    normal = normalize(normal);
+    normal = normalize(normal); //法線ベクトルの長さを正規化->1にする
     normal.w = 0;
     float4 light = float4(-1, 0.5, -0.7, 0);
     light = normalize(light);
