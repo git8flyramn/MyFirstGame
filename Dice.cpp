@@ -1,12 +1,9 @@
 #include "Dice.h"
-#include "Quad.h"
-#include <DirectXMath.h>
-#include <DirectXTex.h>
 #include "Texture.h"
 #include "Camera.h"
-#pragma comment(lib, "DirectXTex.lib")
-using namespace DirectX;
+#include <DirectXMath.h>
 
+using namespace DirectX;
 Dice::Dice() : pVertexBuffer_(nullptr),
               pIndexBuffer_(nullptr),
              pConstantBuffer_(nullptr),
@@ -216,12 +213,12 @@ void Dice::Draw(DirectX::XMMATRIX& worldMatrix)
 void Dice::Release()
 {
 
-	pTexture_->Release();
+	/*pTexture_->Release();
 	SAFE_DELETE(pTexture_);
 
 	SAFE_RELEASE(pConstantBuffer_);
 	SAFE_RELEASE(pIndexBuffer_);
 	SAFE_RELEASE(pVertexBuffer_);
-	Direct3D::pContext->Release();
+	Direct3D::pContext->Release();*/
 }
 

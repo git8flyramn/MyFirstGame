@@ -4,6 +4,7 @@
 #include "framework.h"
 #include "MyFirstGame.h"
 #include "Direct3D.h"
+//#include "Input.h"
 //#include "Quad.h"
 #include "Camera.h"
 //#include "Dice.h"
@@ -77,6 +78,7 @@ int APIENTRY wWinMain(_In_ HINSTANCE hInstance,
     {
         return 0;
     }
+    //Input::Initialize(hWnd);
     Camera::Initialize();
     
     HACCEL hAccelTable = LoadAccelerators(hInstance, MAKEINTRESOURCE(IDC_MYFIRSTGAME));
@@ -86,7 +88,7 @@ int APIENTRY wWinMain(_In_ HINSTANCE hInstance,
    hr =  q->Initialize();*/
     //Sprite* sprite = new Sprite();
     Fbx* fbx = new Fbx();
-   fbx->Load("ODEN1.fbx");
+   fbx->Load("Oden.fbx");
    // Transform* transform = new Transform();
  //  Dice* dice = new Dice();
   // hr = dice->Initialize();
@@ -111,7 +113,13 @@ int APIENTRY wWinMain(_In_ HINSTANCE hInstance,
 
         Direct3D::BeginDraw();
   
+        static Transform trans;
+        trans.position_.x = 1.0f;
+        trans.rotate_.y += 0.1f;
+        trans.Calculation();
+        fbx->Draw(trans);
 
+        Direct3D::EndDraw();
        /* static Transform trans;
         trans.position_.x = 1.0f;
         trans.position_.y += 0.1f;
@@ -127,10 +135,10 @@ int APIENTRY wWinMain(_In_ HINSTANCE hInstance,
    // Direct3D::Release();
     //sprite->Release();
     //SAFE_DELETE(sprite);
-   /* fbx->Release();
-    SAFE_DELETE(fbx);*/
+   fbx->Release();
+    SAFE_DELETE(fbx);
     Direct3D::Release();
-   
+   // Input::Release();
     return (int) msg.wParam;
 }
 

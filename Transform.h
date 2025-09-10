@@ -28,5 +28,5 @@ public:
 	//ƒ[ƒ‹ƒhs—ñ‚ğæ“¾
 	XMMATRIX GetWorldMatrix();
 
-	XMMATRIX GetNomalMatrix();
+	XMMATRIX GetNormalMatrix();
 };

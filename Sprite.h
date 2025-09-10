@@ -2,6 +2,7 @@
 #include "Direct3D.h"
 #include <DirectXMath.h>
 
+//namespace グローバルの変数ぽく使う
 using namespace DirectX;
 struct CONSTANT_BUFFER
 {
