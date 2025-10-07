@@ -1,10 +1,12 @@
 #include "Texture.h"
 #include "Direct3D.h"
 #include <DirectXTex.h>
-#include <wincodec.h>
+
+// DirectXTexのライブラリをリンク
 #pragma comment(lib, "DirectXTex.lib")
-#pragma comment( lib, "WindowsCodecs.lib" )
+
 using namespace DirectX;
+
 Texture::Texture()
 {
 }
@@ -15,7 +17,6 @@ Texture::~Texture()
 
 
 
-//HRESULT Texture::Load(std::string fileName)
 HRESULT Texture::Load(std::string fileName)
 {
 	TexMetadata metadata; //画像の付属情報
@@ -26,11 +27,13 @@ HRESULT Texture::Load(std::string fileName)
 
 	//実際に読んでゆくぅ　　　　　 
 	std::wstring wfileName(fileName.begin(), fileName.end());
-	hr = LoadFromWICFile(wfileName.c_str(), WIC_FLAGS::WIC_FLAGS_NONE, &metadata, image);
-	if (FALSE(hr))
+	hr = LoadFromWICFile(wfileName.c_str(), WIC_FLAGS::WIC_FLAGS_NONE,
+		&metadata, image);
+	if (FAILED(hr))
 	{
 		return S_FALSE;
 	}
+
 	D3D11_SAMPLER_DESC  SamDesc;
 	ZeroMemory(&SamDesc, sizeof(D3D11_SAMPLER_DESC));
 	SamDesc.Filter = D3D11_FILTER_MIN_MAG_MIP_LINEAR;
@@ -42,19 +45,16 @@ HRESULT Texture::Load(std::string fileName)
 	//シェーダーリソースビュー
 
 	D3D11_SHADER_RESOURCE_VIEW_DESC srv = {};
-
 	srv.Format = DXGI_FORMAT_R8G8B8A8_UNORM;
-
 	srv.ViewDimension = D3D11_SRV_DIMENSION_TEXTURE2D;
-
 	srv.Texture2D.MipLevels = 1;
+	hr = CreateShaderResourceView(Direct3D::pDevice,
+		image.GetImages(), image.GetImageCount(), metadata, &pSRV_);
 
-
-
-	hr = CreateShaderResourceView(Direct3D::pDevice,image.GetImages(),
-		                          image.GetImageCount(), metadata, &pSRV_);
 	return S_OK;
 }
+
+
 
 void Texture::Release()
 {

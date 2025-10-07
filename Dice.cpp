@@ -1,17 +1,11 @@
 #include "Dice.h"
-#include "Quad.h"
-#include <DirectXMath.h>
-#include <DirectXTex.h>
 #include "Texture.h"
 #include "Camera.h"
-#pragma comment(lib, "DirectXTex.lib")
+#include <DirectXMath.h>
 using namespace DirectX;
 
 Dice::Dice()
-	: pVertexBuffer_(nullptr),
-	pIndexBuffer_(nullptr),
-	pConstantBuffer_(nullptr),
-	pTexture_(nullptr)
+	: Quad()
 {
 	
 }
@@ -25,25 +19,53 @@ HRESULT Dice::Initialize()
 	HRESULT hr;
 	VERTEX vertices[] =
 	{
-		
-		//{{position},{uv}}
-		//{ XMVectorSet(-1.0f,  1.0f, 0.0f, 0.0f),XMVectorSet(0.0f, 0.0f, 0.0f, 0.0f) },   // 四角形の頂点（左上）
-		//{ XMVectorSet(1.0f,  1.0f, 0.0f, 0.0f),	XMVectorSet(1.0f, 0.0f, 0.0f, 0.0f) },   // 四角形の頂点（右上）
-		//{ XMVectorSet(1.0f, -1.0f, 0.0f, 0.0f),	XMVectorSet(1.0f, 1.0f, 0.0f, 0.0f) },   // 四角形の頂点（右下）
-		//{ XMVectorSet(-1.0f, -1.0f, 0.0f, 0.0f),XMVectorSet(0.0f, 1.0f, 0.0f, 0.0f) },   // 四角形の頂点（左下）
-		
-	    {XMVectorSet(-1.0f,  1.0f, 0.0f, 0.0f),XMVectorSet(0.0f, 0.0f, 0.0f, 0.0f) },   // 四角形の頂点（左上）
-		{ XMVectorSet(1.0f,  1.0f, 0.0f, 0.0f),	XMVectorSet(1.0f, 0.0f, 0.0f, 0.0f) },   // 四角形の頂点（右上）
-		{ XMVectorSet(1.0f, -1.0f, 0.0f, 0.0f),	XMVectorSet(1.0f, 1.0f, 0.0f, 0.0f) },   // 四角形の頂点（右下）
-		{ XMVectorSet(-1.0f, -1.0f, 0.0f, 0.0f),XMVectorSet(0.0f, 1.0f, 0.0f, 0.0f) },   // 四角形の頂点（左下
 
-	  
-	 
+		//{{position}, {uv}}
+		{{ -1.0f,  1.0f, -1.0f, 0.0f}, {0.0f,   0.0f}, {0.0f, 0.0f, -1.0f, 0.0f}},// 四角形の頂点（左上）
+		{{  1.0f,  1.0f, -1.0f, 0.0f}, {0.25f,  0.0f}, {0.0f, 0.0f, -1.0f, 0.0f} },// 四角形の頂点（右上）
+		{{  1.0f, -1.0f, -1.0f, 0.0f}, {0.25f,  0.5f}, {0.0f, 0.0f, -1.0f, 0.0f} },// 四角形の頂点（右下）
+		{{ -1.0f, -1.0f, -1.0f, 0.0f}, {0.0f,   0.5f}, {0.0f, 0.0f, -1.0f, 0.0f}},	// 四角形の頂点（左下）	
+		//{{position}, {uv}}
+		{{ -1.0f,  1.0f, +1.0f, 0.0f}, {0.25f,  0.5f}, {0.0f, 0.0f, 1.0f, 0.0f}},// 四角形の頂点（左上）
+		{{  1.0f,  1.0f, +1.0f, 0.0f}, {0.5f,  0.5f},  {0.0f, 0.0f, 1.0f, 0.0f}},// 四角形の頂点（右上）
+		{{  1.0f, -1.0f, +1.0f, 0.0f}, {0.5f,  1.0f},  {0.0f, 0.0f, 1.0f, 0.0f}},// 四角形の頂点（右下）
+		{{ -1.0f, -1.0f, +1.0f, 0.0f}, {0.25f,  1.0f}, {0.0f, 0.0f, 1.0f, 0.0f}},// 四角形の頂点（左下）	
+
+		// 右面
+		{{1.0f, 1.0f, -1.0f, 0.0f}, { 0.0f,  1.0f }, {1.0f, 0.0f, 0.0f, 0.0f}},
+		{{1.0f, 1.0f, +1.0f, 0.0f}, { 0.0f,  0.5f }, {1.0f, 0.0f, 0.0f, 0.0f}},
+		{{1.0f, -1.0f, 1.0f, 0.0f},	{ 0.25f,  0.5f}, {1.0f, 0.0f, 0.0f, 0.0f}},
+		{{1.0f, -1.0f,-1.0f, 0.0f}, { 0.25f,  1.0f}, {1.0f, 0.0f, 0.0f, 0.0f}},
+
+		// 左面
+		{{-1.0f, 1.0f, -1.0f, 0.0f}, { 0.5f,  0.0f }, {-1.0f, 0.0f, 0.0f, 0.0f}},
+		{{-1.0f, 1.0f, +1.0f, 0.0f}, { 0.25f,  0.0f }, {-1.0f, 0.0f, 0.0f, 0.0f}},
+		{{-1.0f, -1.0f, 1.0f, 0.0f}, { 0.25f,  0.5f}, {-1.0f, 0.0f, 0.0f, 0.0f}},
+		{{-1.0f, -1.0f,-1.0f, 0.0f}, { 0.5f,  0.5f}, {-1.0f, 0.0f, 0.0f, 0.0f}},
+
+		// 上面
+		{{-1.0f, 1.0f, 1.0f, 0.0f}, {0.5f, 0.0f}, {0.0f, 1.0f, 0.0f, 0.0f}},
+		{{ 1.0f, 1.0f, 1.0f, 0.0f}, {0.75f, 0.0f}, {0.0f, 1.0f, 0.0f, 0.0f}},
+		{{ 1.0f, 1.0f,-1.0f, 0.0f}, {0.75f, 0.5f}, {0.0f, 1.0f, 0.0f, 0.0f}},
+		{{-1.0f, 1.0f,-1.0f, 0.0f}, {0.5f, 0.5f}, {0.0f, 1.0f, 0.0f, 0.0f}},
+
+		// 底面
+		{{-1.0f, -1.0f, 1.0f, 0.0f}, {0.75f, 0.0f}, {0.0f, -1.0f, 0.0f, 0.0f}},
+		{{ 1.0f, -1.0f, 1.0f, 0.0f}, {1.0f, 0.0f}, {0.0f, -1.0f, 0.0f, 0.0f}},
+		{{ 1.0f, -1.0f,-1.0f, 0.0f}, {1.0f, 0.5f}, {0.0f, -1.0f, 0.0f, 0.0f}},
+		{{-1.0f, -1.0f,-1.0f, 0.0f}, {0.75f, 0.5f}, {0.0f, -1.0f, 0.0f, 0.0f}},
 	  
 		
 	};
 	
-
+	int index[] = {
+		0, 1, 2, 0, 2, 3, // 前面
+		4, 6, 5, 4, 7, 6, // 後面
+		8, 9 ,10, 8,10,11, //右側
+	   12,14,13,12,15,14,//左側
+	   16,17,18,16,18,19,//上側
+	   20,22,21,20,23,22 //下側
+	};
 	const int numVertex = sizeof(vertices) / sizeof(vertices[0]);
 	//頂点データ用バッファの設定
 	D3D11_BUFFER_DESC bd_vertex;
@@ -62,9 +84,9 @@ HRESULT Dice::Initialize()
 		MessageBox(nullptr, L"頂点バッファの作成に失敗しました", L"エラー", MB_OK);
 		return hr;
 	}
-	//インデックス情報
-	int index[] = { 0,2,3, 0,1,2 
-	                }; //CW
+	////インデックス情報
+	//int index[] = { 0,2,3, 0,1,2 
+	//                }; //CW
 	
 	// インデックスバッファを生成する
 	D3D11_BUFFER_DESC   bd;
@@ -113,25 +135,18 @@ HRESULT Dice::Initialize()
 
 void Dice::Draw(DirectX::XMMATRIX& worldMatrix)
 {
-	D3D11_MAPPED_SUBRESOURCE pdata;
+	//コンスタントバッファに渡す情報
 	CONSTANT_BUFFER cb;
 	cb.matWVP = XMMatrixTranspose(worldMatrix * Camera::GetViewMatrix() * Camera::GetProjectionMatrix());
+	cb.matNormal = XMMatrixInverse(nullptr, worldMatrix);	//法線変換用の行列
+	cb.matWorld = XMMatrixTranspose(worldMatrix);
 
 
+	D3D11_MAPPED_SUBRESOURCE pdata;
 	Direct3D::pContext->Map(pConstantBuffer_, 0, D3D11_MAP_WRITE_DISCARD, 0, &pdata);	// GPUからのデータアクセスを止める
 	memcpy_s(pdata.pData, pdata.RowPitch, (void*)(&cb), sizeof(cb));	// データを値を送る
-	//再開
+	Direct3D::pContext->Unmap(pConstantBuffer_, 0);	//再開
 
-	ID3D11SamplerState* pSampler = pTexture_->GetSampler();
-	Direct3D::pContext->PSSetSamplers(0, 1, &pSampler);
-
-	ID3D11ShaderResourceView* pSRV = pTexture_->GetSRV();
-
-	Direct3D::pContext->PSSetShaderResources(0, 1, &pSRV);
-
-	Direct3D::pContext->Unmap(pConstantBuffer_, 0);
-
-	Direct3D::pContext->DrawIndexed(6, 0, 0);
 	//頂点バッファ
 	UINT stride = sizeof(VERTEX);
 	UINT offset = 0;
@@ -144,19 +159,22 @@ void Dice::Draw(DirectX::XMMATRIX& worldMatrix)
 
 	//コンスタントバッファ
 	Direct3D::pContext->VSSetConstantBuffers(0, 1, &pConstantBuffer_);	//頂点シェーダー用	
-
 	Direct3D::pContext->PSSetConstantBuffers(0, 1, &pConstantBuffer_);	//ピクセルシェーダー用
 
+	ID3D11SamplerState* pSampler = pTexture_->GetSampler();
+	Direct3D::pContext->PSSetSamplers(0, 1, &pSampler);
+
+	ID3D11ShaderResourceView* pSRV = pTexture_->GetSRV();
+	Direct3D::pContext->PSSetShaderResources(0, 1, &pSRV);
+
+
+
+	Direct3D::pContext->DrawIndexed(36, 0, 0);
 }
 
 void Dice::Release()
 {
 
-	pTexture_->Release();
-	SAFE_DELETE(pTexture_);
-
-	SAFE_RELEASE(pConstantBuffer_);
-	SAFE_RELEASE(pIndexBuffer_);
-	SAFE_RELEASE(pVertexBuffer_);
+	
 }
 

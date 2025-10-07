@@ -4,9 +4,13 @@
 #include "framework.h"
 #include "MyFirstGame.h"
 #include "Direct3D.h"
-#include "Quad.h"
+//#include "Quad.h"
 #include "Camera.h"
-#include "Dice.h"
+//#include "Dice.h"
+//#include "Sprite.h"
+#include "Transform.h"
+#include "Fbx.h"
+#include "Input.h"
 HWND hWnd = nullptr;
 
 #define MAX_LOADSTRING 100
@@ -74,13 +78,16 @@ int APIENTRY wWinMain(_In_ HINSTANCE hInstance,
         return 0;
     }
     Camera::Initialize();
+    Input::Initialize(hWnd);
     HACCEL hAccelTable = LoadAccelerators(hInstance, MAKEINTRESOURCE(IDC_MYFIRSTGAME));
 
     MSG msg = {};
    /*Quad* q = new Quad();
    hr =  q->Initialize();*/
-   Dice* d = new Dice();
-   hr = d->Initialize();
+   //Dice* d = new Dice();
+   //hr = d->Initialize();
+    Fbx* fbx = new Fbx();
+    fbx->Load("Oden.fbx");
    if (FAILED(hr))
    {
        return 0;
@@ -100,33 +107,54 @@ int APIENTRY wWinMain(_In_ HINSTANCE hInstance,
 
 
            // 描画処理
-          
-            
-     /*   Camera::Update();
+        Camera::Update();
+        Input::Update();
         Direct3D::BeginDraw();
-               float timer = 0.0f;
-               while(timer < 300.0f)
+        if (Input::IsKey(DIK_ESCAPE))
+        {
+            static int cnt = 0;
+            cnt++;
+            if (cnt >= 3)
+            {
+                PostQuitMessage(0);
+            }
+
+
+        }
+            //DIMOFS_BUTTON0
+        if (Input::IsMouseButton(0))
+        {
+            static int cnt = 0;
+            cnt++;
+            if (cnt >= 3)
+            {
+                PostQuitMessage(0);
+            }
+
+        }
+
+              /* float timer = 0.0f;
+               while (timer < 300.0)
                {
-                   Camera::Update();
-                   Direct3D::BeginDraw();
-                  XMMATRIX dmat = XMMatrixRotationY(XMConvertToRadians(RAD + timer));
-                  d->Draw(dmat);
-                  timer += 0.03f;
-                  Direct3D::EndDraw();
+                 
+                   XMMATRIX mat = XMMatrixRotationY(XMConvertToRadians(timer));
+                   d->Draw(mat);
+                   timer = +0.05f;
+                  
+
                }*/
-               Camera::Update();
-               Direct3D::BeginDraw();
-               XMMATRIX dmat = XMMatrixRotationY(XMConvertToRadians(RAD));
-               d->Draw(dmat);
-             
-               Direct3D::EndDraw();
+        static Transform trans;
+        trans.position_.x = 1.0f;
+        trans.rotate_.y = 0.1f;
+        fbx->Draw(trans);
+        Direct3D::EndDraw();
     
-           
             
     }
-    d->Release();
-    SAFE_DELETE(d);
-    //Direct3D::Release();
+    //d->Release();
+    SAFE_DELETE(fbx);
+    Input::Release();
+    Direct3D::Release();
     
    
     return (int) msg.wParam;

@@ -8,6 +8,13 @@
 
 #pragma comment (lib,"d3d11.lib")
 #pragma comment(lib, "d3dcompiler.lib")
+
+enum SHADER_TYPE
+{
+	SHADER_3D,
+	SHADER_2D,
+	SHADER_MAX
+};
 namespace Direct3D
 {
 	//extern‚Í‚Ç‚±‚©‚ÉÀÛ‚Ì’è‹`(éŒ¾)•¶‚ ‚é‚¼‚Á‚Ä‚¢‚¤éŒ¾
@@ -18,6 +25,10 @@ namespace Direct3D
 	//‰Šú‰»
 	HRESULT Initialize(int winW, int winH, HWND hWnd);
 
+	HRESULT InitShader3D();
+	HRESULT InitShader2D();
+
+	void SetShader(SHADER_TYPE type);
 	//•`‰æŠJn
 	void BeginDraw();
 
