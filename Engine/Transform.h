@@ -1,7 +1,5 @@
 #pragma once
 #include <DirectXMath.h>
-#include "Direct3D.h"
-#include <DirectXTex.h>
 using namespace DirectX;
 
 //位置、向き、拡大率などを管理するクラス

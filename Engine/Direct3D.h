@@ -2,11 +2,13 @@
 #include <Windows.h>
 #include <d3d11.h>
 #include <assert.h>
-#define SAFE_DELETE(p) if(p != nullptr){ delete p; p = nullptr;}
-#define SAFE_RELEASE(p) if(p != nullptr){ p->Release(); p = nullptr;}
 //リンカ
 #pragma comment (lib,"d3d11.lib")
 #pragma comment(lib, "d3dcompiler.lib")
+
+#define SAFE_DELETE(p) if(p != nullptr){ delete p; p = nullptr;}
+#define SAFE_RELEASE(p) if(p != nullptr){ p->Release(); p = nullptr;}
+
 enum SHADER_TYPE
 {
 	SHADER_3D,//3d用シェーダ
