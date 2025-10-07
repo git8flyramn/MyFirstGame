@@ -4,13 +4,13 @@
 #include "framework.h"
 #include "MyFirstGame.h"
 #include "Direct3D.h"
-//#include "Input.h"
 //#include "Quad.h"
 #include "Camera.h"
 //#include "Dice.h"
 //#include "Sprite.h"
 #include "Fbx.h"
 #include "Transform.h"
+#include "Input.h"
 
 HWND hWnd = nullptr;
 
@@ -80,7 +80,7 @@ int APIENTRY wWinMain(_In_ HINSTANCE hInstance,
     }
     //Input::Initialize(hWnd);
     Camera::Initialize();
-    
+    Input::Initialize(hWnd); //入力の初期化
     HACCEL hAccelTable = LoadAccelerators(hInstance, MAKEINTRESOURCE(IDC_MYFIRSTGAME));
 
     MSG msg = {};
@@ -110,6 +110,19 @@ int APIENTRY wWinMain(_In_ HINSTANCE hInstance,
             DispatchMessage(&msg);
         }
         Camera::Update(); // カメラの更新
+        Input::Update();
+
+        if (Input::IsKey(DIK_ESCAPE))
+        {
+            static int cnt = 0;
+            cnt++;
+            if (cnt >= 3)
+            {
+                PostQuitMessage(0);
+            }
+        }
+
+        
 
         Direct3D::BeginDraw();
   
@@ -135,8 +148,8 @@ int APIENTRY wWinMain(_In_ HINSTANCE hInstance,
    // Direct3D::Release();
     //sprite->Release();
     //SAFE_DELETE(sprite);
-   fbx->Release();
     SAFE_DELETE(fbx);
+    Input::Release();
     Direct3D::Release();
    // Input::Release();
     return (int) msg.wParam;
@@ -274,6 +287,13 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
     case WM_DESTROY:
         PostQuitMessage(0);
         break;
+    case WM_MOUSEMOVE:
+    {
+        int x = LOWORD(lParam);
+        int y = HIWORD(lParam);
+        Input::SetMousePosition(x, y);
+        OutputDebugStringA((std::to_string(x) + "." + std::to_string(y) + "\n").c_str());
+    }
     default:
         return DefWindowProc(hWnd, message, wParam, lParam);
     }

@@ -1,9 +1,7 @@
 #include "Texture.h"
 #include "Direct3D.h"
 #include <DirectXTex.h>
-//#include <wincodec.h>
 #pragma comment(lib, "DirectXTex.lib")
-//#pragma comment( lib, "WindowsCodecs.lib" )
 using namespace DirectX;
 Texture::Texture()
 {
@@ -27,10 +25,10 @@ HRESULT Texture::Load(std::string fileName)
 	//実際に読んでゆくぅ　　　　　 
 	std::wstring wfileName(fileName.begin(), fileName.end());
 	hr = LoadFromWICFile(wfileName.c_str(), WIC_FLAGS::WIC_FLAGS_NONE, &metadata, image);
-	if (FALSE(hr))
+	/*if (FALSE(hr))
 	{
 		return S_FALSE;
-	}
+	}*/
 
 	D3D11_SAMPLER_DESC  SamDesc;
 	ZeroMemory(&SamDesc, sizeof(D3D11_SAMPLER_DESC));

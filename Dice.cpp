@@ -4,10 +4,7 @@
 #include <DirectXMath.h>
 
 using namespace DirectX;
-Dice::Dice() : pVertexBuffer_(nullptr),
-              pIndexBuffer_(nullptr),
-             pConstantBuffer_(nullptr),
-             pTexture_(nullptr)
+Dice::Dice() : Quad()
 {
 	
 }
