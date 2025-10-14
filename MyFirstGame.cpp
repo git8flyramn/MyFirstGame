@@ -4,13 +4,11 @@
 #include "framework.h"
 #include "MyFirstGame.h"
 #include "Engine/Direct3D.h"
-//#include "Quad.h"
 #include "Engine/Camera.h"
-//#include "Dice.h"
-//#include "Sprite.h"
-#include "Engine/Fbx.h"
+//#include "Engine/Fbx.h"
 #include "Engine/Transform.h"
 #include "Engine/Input.h"
+#include "Engine/RootJob.h"
 
 HWND hWnd = nullptr;
 
@@ -20,7 +18,9 @@ HWND hWnd = nullptr;
 const wchar_t* WIN_CLASS_NAME = L"SAMPLE_GAME_WINDOW";
 const int WINDOW_WIDTH = 800;
 const int WINDOW_HEIGHT = 600;
-float RAD = 45.0f;
+
+RootJob* pRootJob = nullptr;
+
 // グローバル変数:
 HINSTANCE hInst;                                // 現在のインターフェイス
 WCHAR szTitle[MAX_LOADSTRING];                  // タイトル バーのテキスト
@@ -78,26 +78,22 @@ int APIENTRY wWinMain(_In_ HINSTANCE hInstance,
     {
         return 0;
     }
-    //Input::Initialize(hWnd);
     Camera::Initialize();
     Input::Initialize(hWnd); //入力の初期化
     HACCEL hAccelTable = LoadAccelerators(hInstance, MAKEINTRESOURCE(IDC_MYFIRSTGAME));
 
     MSG msg = {};
-   /*Quad* q = new Quad();
-   hr =  q->Initialize();*/
-    //Sprite* sprite = new Sprite();
-    Fbx* fbx = new Fbx();
-   fbx->Load("Oden.fbx");
+    //メンバ変数の物
+    pRootJob = new RootJob(nullptr);
+   //ゲームで増える物
+    pRootJob->Initialize();
+   
+   /* Fbx* fbx = new Fbx();
+   fbx->Load("ODEN2.fbx");*/
    // Transform* transform = new Transform();
  //  Dice* dice = new Dice();
   // hr = dice->Initialize();
   // hr = sprite->Initialize();
- 
-    if (FAILED(hr))
-   {
-       return 0;
-   }
   //  ZeroMemory(&msg, sizeof(msg));
     // メイン メッセージ ループ:　ユーザー操作(クリックやキー入力)を受け取り、処理を続ける仕組み
     while (msg.message != WM_QUIT)
@@ -111,6 +107,7 @@ int APIENTRY wWinMain(_In_ HINSTANCE hInstance,
         }
         Camera::Update(); // カメラの更新
         Input::Update();
+        pRootJob->Update();
 
         if (Input::IsKey(DIK_ESCAPE))
         {
@@ -125,12 +122,13 @@ int APIENTRY wWinMain(_In_ HINSTANCE hInstance,
         
 
         Direct3D::BeginDraw();
-  
-        static Transform trans;
+         //pRootJobから、すべてのオブジェクトの描画
+        pRootJob->DrawSub();
+      /*  static Transform trans;
         trans.position_.x = 1.0f;
-        trans.rotate_.y += 0.1f;
+        trans.rotate_.y  = 0.1f;
         trans.Calculation();
-        fbx->Draw(trans);
+        fbx->Draw(trans);*/
 
         Direct3D::EndDraw();
        /* static Transform trans;
@@ -143,15 +141,11 @@ int APIENTRY wWinMain(_In_ HINSTANCE hInstance,
        Direct3D::EndDraw();*/
        
     }
-   // dice->Release();
-  //  SAFE_DELETE(dice);
-   // Direct3D::Release();
-    //sprite->Release();
-    //SAFE_DELETE(sprite);
-    SAFE_DELETE(fbx);
+  
+    //SAFE_DELETE(fbx);
+    pRootJob->Release();
     Input::Release();
     Direct3D::Release();
-   // Input::Release();
     return (int) msg.wParam;
 }
 
@@ -294,8 +288,11 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
         Input::SetMousePosition(x, y);
         OutputDebugStringA((std::to_string(x) + "." + std::to_string(y) + "\n").c_str());
     }
+    break;
     default:
         return DefWindowProc(hWnd, message, wParam, lParam);
+    
+ 
     }
     return 0;
 }
