@@ -5,7 +5,7 @@ GameObject::GameObject(): pParent_(nullptr)
 }
 
 GameObject::GameObject(GameObject* parent, const std::string& name)
-	:pParent_(parent),objectName_(name)
+	:pParent_(parent),objectName_(name),isDead_(false)
 {
 	if (parent != nullptr)
 	{
@@ -51,4 +51,38 @@ void GameObject::ReleaseSub()
 	{
 		child->ReleaseSub();
 	}
+	
+	for (auto itr = childList_.begin(); itr != childList_.end();)
+	{
+		if ((*itr)->isDead_)
+		{
+			(*itr)->ReleaseSub();
+			//isDead_のtrueの場所のポインタを消す
+			delete(*itr);
+			//isDead_のtrueがあった場所の次の場所を指す。
+			itr = childList_.erase(itr);
+		}
+		else
+		{
+			itr++;
+		}
+	}
 }
+
+void GameObject::SetPosition(XMFLOAT3 position)
+{
+	transform_.position_ = position;
+}
+
+void GameObject::SetPosition(float x, float y, float z)
+{
+	transform_.position_.x = x;
+	transform_.position_.y = y;
+	transform_.position_.z = z;
+}
+
+void GameObject::KillMe()
+{
+	isDead_ = true;
+}
+

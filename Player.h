@@ -2,11 +2,10 @@
 #include "Engine/GameObject.h"
 
 class Fbx;
+class ChildOden;
 class Player :
     public GameObject
 {
-private:
-    Fbx* pFbx_;
 public:
     Player(GameObject* parent);
     ~Player();
@@ -14,5 +13,9 @@ public:
     void Initialize() override;
     void Draw() override;
     void Release() override;
+private:
+    Fbx* pFbx_;
+    ChildOden* pRChildOden_;
+    ChildOden* pLChildOden;
 };
 

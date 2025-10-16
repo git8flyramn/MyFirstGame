@@ -10,9 +10,6 @@ SamplerState g_sampler : register(s0); //サンプラー
 //───────────────────────────────────────
 cbuffer global
 {
-   // float4x4 matWVP; // ワールド・ビュー・プロジェクションの合成行列
-    //float4x4 matW; //ワールド行列
-    //float4x4 matNomal;
      float4x4 matWorld;
 };
 
@@ -24,7 +21,6 @@ struct VS_OUT
                  //セマンティクス
     float4 pos : SV_POSITION; //位置
     float2 uv : TEXCOORD; //UV座標
-   // float4 color : COLOR; //色(明るさ)
 };
 
 //───────────────────────────────────────
@@ -50,12 +46,7 @@ VS_OUT VS(float4 pos : POSITION, float4 uv : TEXCOORD)
 // ピクセルシェーダ
 //───────────────────────────────────────
 float4 PS(VS_OUT inData) : SV_Target
-{
-    
-    
-  //  float4 color =  g_texture.Sample(g_sampler, inData.uv) * inData.color;
-    //float4 ret = float(inData.uv.x,inData.uv.y,0,1;
-    
+{    
     return g_texture.Sample(g_sampler, inData.uv);
     
 }

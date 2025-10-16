@@ -14,6 +14,10 @@ Player::~Player()
 void Player::Update()
 {
 	transform_.rotate_.y += 1.0f;
+	if (transform_.rotate_.y > 720.0f)
+	{
+		//KillMe();
+	}
 }
 
 void Player::Initialize()
@@ -22,11 +26,15 @@ void Player::Initialize()
 	//pFbx_がNullptrじゃなかったら、のチェックをしておくと
 	//良い。
 	pFbx_->Load("Oden.fbx");
-	transform_.scale_.x = 0.7f;
-	transform_.scale_.y = 0.7f;
-	transform_.scale_.z = 0.7f;
+	transform_.scale_.x = 0.3f;
+	transform_.scale_.y = 0.3f;
+	transform_.scale_.z = 0.3f;
 	//子のオブジェクトにChildOdenを追加する
-	Instantiate<ChildOden>(this);
+	pRChildOden_ = (ChildOden*)Instantiate<ChildOden>(this);
+	pLChildOden = (ChildOden*)Instantiate<ChildOden>(this);
+	pRChildOden_->SetPosition(2.0f, 1.0f, 0.0f);
+	pLChildOden->SetPosition(-2.0f, 1.0f, 0.0f);
+
 }
 
 void Player::Draw()

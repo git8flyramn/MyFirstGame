@@ -71,6 +71,5 @@ float4 PS(VS_OUT inData) : SV_Target
     {
         color = float4(1, 1, 1, 1);
     }
-    return color;
-    //float4 ret = float(inData.uv.x,inData.uv.y,0,1;
+    return color * inData.color;
 }
