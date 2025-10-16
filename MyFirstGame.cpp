@@ -107,6 +107,7 @@ int APIENTRY wWinMain(_In_ HINSTANCE hInstance,
             DispatchMessage(&msg);
         }
         //メッセージなし
+        timeBeginPeriod(1);
         static DWORD countFps = 0; //FPS計測用カウンタ
         static DWORD startTime = timeGetTime();//初回の時間を保存
         DWORD nowTime = timeGetTime();//現在の時間を取得
@@ -119,14 +120,14 @@ int APIENTRY wWinMain(_In_ HINSTANCE hInstance,
             startTime = nowTime;
         }
 
-        if (nowTime - lastUpdateTime <= 1000.0f / 60);
+        if (nowTime - lastUpdateTime <= 1000.0f / 60)
         {
             continue;
         }
         lastUpdateTime = nowTime;
         countFps++;
        // startTime = nowTime;
-
+        timeEndPeriod(1);
         //ゲームの処理
         Camera::Update(); // カメラの更新
         Input::Update();
@@ -167,11 +168,10 @@ int APIENTRY wWinMain(_In_ HINSTANCE hInstance,
        Direct3D::EndDraw();*/
        
     }
-  
-    //SAFE_DELETE(fbx);
-    pRootJob->Release();
+    pRootJob->ReleaseSub();
     Input::Release();
     Direct3D::Release();
+    
     return (int) msg.wParam;
 }
 

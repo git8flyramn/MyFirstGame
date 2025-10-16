@@ -32,6 +32,7 @@ void GameObject::DrawSub()
 
 void GameObject::UpdateSub()
 {
+	//本体の機能を呼び出す
 	this->Update();
 	for (auto child : childList_)
 	{
@@ -42,4 +43,9 @@ void GameObject::UpdateSub()
 
 void GameObject::ReleaseSub()
 {
+	this->Release();//自分を解放
+	for (auto child : childList_)
+	{
+		child->ReleaseSub();
+	}
 }
