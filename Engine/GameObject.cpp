@@ -7,7 +7,10 @@ GameObject::GameObject(): pParent_(nullptr)
 GameObject::GameObject(GameObject* parent, const std::string& name)
 	:pParent_(parent),objectName_(name)
 {
-
+	if (parent != nullptr)
+	{
+		transform_.pParent_ = &(parent->transform_);
+	}
 }
 
 GameObject::~GameObject()

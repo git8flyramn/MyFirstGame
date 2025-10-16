@@ -17,15 +17,15 @@ Fbx::Fbx()
 
 HRESULT Fbx::Load(std::string fileName)
 {
-	//using std::string;
-	//string subDir("Assets");
-	//fs::path currPath, basePath;
-	//currPath = fs::current_path();
-	//basePath = currPath;
-	//currPath = currPath / subDir;
-	////fs::path subPath(currPath.string() + "\\" + subDir);
-	//assert(fs::exists(currPath));//subPathはあります、という確認
-	//fs::current_path(currPath);
+	using std::string;
+	string subDir("Assets");
+	fs::path currPath, basePath;
+	currPath = fs::current_path();
+	basePath = currPath;
+	currPath = currPath / subDir;
+	//fs::path subPath(currPath.string() + "\\" + subDir);
+	assert(fs::exists(currPath));//subPathはあります、という確認
+	fs::current_path(currPath);
 
 	//マネージャを生成
 	FbxManager* pFbxManager = FbxManager::Create();

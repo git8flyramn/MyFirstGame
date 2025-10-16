@@ -1,5 +1,6 @@
 #pragma once
 #include <DirectXMath.h>
+
 using namespace DirectX;
 
 //位置、向き、拡大率などを管理するクラス
@@ -13,6 +14,7 @@ public:
 	XMFLOAT3 position_;	//位置
 	XMFLOAT3 rotate_;	//向き
 	XMFLOAT3 scale_;	//拡大率
+	Transform* pParent_; //親のTransform
 
 	//コンストラクタ
 	Transform();

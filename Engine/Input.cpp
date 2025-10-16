@@ -78,6 +78,21 @@ namespace Input
         mouseposition = { (float)x,(float)y,0.0f,1.0f };
     }
 
+    bool Input::IsMouseButton(int btnCode)
+    {
+        return false;
+    }
+
+    bool Input::IsMouseButtonUp(int btnCode)
+    {
+        return false;
+    }
+
+    bool Input::IsMouseButtonDown(int btnCode)
+    {
+        return false;
+    }
+
     void Input::Release()
     {
         SAFE_RELESE(pDInput);

@@ -43,6 +43,7 @@ VS_OUT VS(float4 pos : POSITION, float4 uv : TEXCOORD, float4 normal : NORMAL)
     //法線を回転
     //nomal = matW;
     outData.pos = mul(pos, matWVP);
+    uv.w = 1;
     outData.uv = uv.xy;
     
     normal = mul(normal, matNomal); //法線ベクトルをワールドビュープロジェクション行列で変換

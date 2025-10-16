@@ -171,7 +171,6 @@ int APIENTRY wWinMain(_In_ HINSTANCE hInstance,
     pRootJob->ReleaseSub();
     Input::Release();
     Direct3D::Release();
-    
     return (int) msg.wParam;
 }
 
