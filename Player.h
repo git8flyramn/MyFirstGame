@@ -1,6 +1,5 @@
 #pragma once
-#include "Engine/GameObject.h"
-
+#include "Engine//GameObject.h"
 class Fbx;
 class ChildOden;
 class Player :
@@ -17,5 +16,6 @@ private:
     Fbx* pFbx_;
     ChildOden* pRChildOden_;
     ChildOden* pLChildOden;
+    int hModel_;
 };
 

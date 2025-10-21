@@ -15,6 +15,7 @@ public:
     void Release() override;
 private:
     Fbx* pFbx_;
+    int hModel_;
 
 };
 

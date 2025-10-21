@@ -8,6 +8,7 @@
 #include "Engine/Transform.h"
 #include "Engine/Input.h"
 #include "Engine/RootJob.h"
+#include "Engine/Model.h"
 
 #pragma comment(lib, "winmm.lib")
 
@@ -89,6 +90,7 @@ int APIENTRY wWinMain(_In_ HINSTANCE hInstance,
     pRootJob = new RootJob(nullptr);
    //ゲームで増える物
     pRootJob->Initialize();
+
    
    /* Fbx* fbx = new Fbx();
    fbx->Load("ODEN2.fbx");*/
@@ -169,6 +171,7 @@ int APIENTRY wWinMain(_In_ HINSTANCE hInstance,
        Direct3D::EndDraw();*/
        
     }
+    Model::Release();
     pRootJob->ReleaseSub();
     Input::Release();
     Direct3D::Release();

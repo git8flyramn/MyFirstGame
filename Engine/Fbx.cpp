@@ -23,7 +23,7 @@ HRESULT Fbx::Load(std::string fileName)
 	currPath = fs::current_path();
 	basePath = currPath;
 	currPath = currPath / subDir;
-	fs::path subPath(currPath.string() + "\\" + subDir);
+	//fs::path subPath(currPath.string() + "\\" + subDir);
 	//assert(fs::exists(currPath));//subPathÇÕÇ†ÇËÇ‹Ç∑ÅAÇ∆Ç¢Ç§ämîF
 	fs::current_path(currPath);
 
@@ -72,7 +72,6 @@ void Fbx::Draw(Transform& transform)
 
 	CONSTANT_BUFFER cb;
 	cb.matWVP = XMMatrixTranspose(transform.GetWorldMatrix() * Camera::GetViewMatrix() * Camera::GetProjectionMatrix());
-	//cb.matNormal = XMMatrixIdentity();
 	cb.matNormal = transform.GetNormalMatrix();
 
 	//for (int i = 0;i < materialCount_;i++)
