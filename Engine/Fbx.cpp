@@ -23,8 +23,8 @@ HRESULT Fbx::Load(std::string fileName)
 	currPath = fs::current_path();
 	basePath = currPath;
 	currPath = currPath / subDir;
-	//fs::path subPath(currPath.string() + "\\" + subDir);
-	assert(fs::exists(currPath));//subPathはあります、という確認
+	fs::path subPath(currPath.string() + "\\" + subDir);
+	//assert(fs::exists(currPath));//subPathはあります、という確認
 	fs::current_path(currPath);
 
 	//マネージャを生成
@@ -57,7 +57,7 @@ HRESULT Fbx::Load(std::string fileName)
 	InitConstantBuffer();
 	InitMaterial(pNode);
 
-	//fs::current_path(basePath);
+	fs::current_path(basePath);
 
 	//マネージャ解放
 	pFbxManager->Destroy();

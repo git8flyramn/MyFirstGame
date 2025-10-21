@@ -11,7 +11,7 @@ namespace Model
 	    Transform transform_;
 		std::string filename_;
 	};
-	void Load(std::string filename);
+	int Load(std::string filename);
 	void SetTransform(int hModel, Transform transform);
 	void Draw(int hModel);
 	void Release();

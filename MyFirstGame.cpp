@@ -16,6 +16,7 @@ HWND hWnd = nullptr;
 #define MAX_LOADSTRING 100
 
 //グローバル変数の宣言
+
 const wchar_t* WIN_CLASS_NAME = L"SAMPLE_GAME_WINDOW";
 const int WINDOW_WIDTH = 800;
 const int WINDOW_HEIGHT = 600;

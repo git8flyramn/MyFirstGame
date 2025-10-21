@@ -7,9 +7,9 @@ ChildOden::ChildOden(GameObject* parent)
 	//pFbx_がNullptrじゃなかったら、のチェックをしておくと
 	//良い。
 	pFbx_->Load("Oden.fbx");
-	transform_.scale_.x = 0.2f;
-	transform_.scale_.y = 0.2f;
-	transform_.scale_.z = 0.2f;
+	transform_.scale_.x = 0.3f;
+	transform_.scale_.y = 0.3f;
+	transform_.scale_.z = 0.3f;
 	transform_.position_.x = 2.0f;
 	transform_.position_.y = 1.0f;
 }
