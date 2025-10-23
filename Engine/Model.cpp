@@ -18,7 +18,7 @@ int Model::Load(std::string filename)
 			break;
 	    }
 	}
-	if (pModelData->pfbx_ = nullptr)
+	if (pModelData->pfbx_ == nullptr)
 	{
 		pModelData->pfbx_ = new Fbx;
 		pModelData->pfbx_->Load(filename.c_str());

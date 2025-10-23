@@ -24,7 +24,7 @@ HRESULT Fbx::Load(std::string fileName)
 	basePath = currPath;
 	currPath = currPath / subDir;
 	//fs::path subPath(currPath.string() + "\\" + subDir);
-	//assert(fs::exists(currPath));//subPathはあります、という確認
+	assert(fs::exists(currPath));//subPathはあります、という確認
 	fs::current_path(currPath);
 
 	//マネージャを生成

@@ -13,7 +13,6 @@ Texture::~Texture()
 
 
 
-//HRESULT Texture::Load(std::string fileName)
 HRESULT Texture::Load(std::string fileName)
 {
 	TexMetadata metadata; //‰æ‘œ‚Ì•t‘®î•ñ
