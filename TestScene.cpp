@@ -18,12 +18,12 @@ void TestScene::Initialize()
 	pRChildOden_->SetPosition(2.0f, 1.0f, 0.0f);
 	pLChildOden->SetPosition(-2.0f, 1.0f, 0.0f);
 	*/
-	transform_.scale_.x = 0.3f;
-	transform_.scale_.y = 0.3f;
-	transform_.scale_.z = 0.3f;
-	transform_.position_.x = 1.0f;
-	transform_.position_.y = 1.0f;
-	hModel_ = Model::Load("Odenkushi.fbx");
+	transform_.scale_.x = 0.7f;
+	transform_.scale_.y = 0.7f;
+	transform_.scale_.z = 0.7f;
+	transform_.position_.x = 0.5f;
+	transform_.position_.y = 0.5f;
+	hModel_ = Model::Load("Box.fbx");
 }
 
 void TestScene::Update()

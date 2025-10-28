@@ -40,12 +40,12 @@ void Player::Initialize()
 
 void Player::Draw()
 {
-	///*if (pFbx_)
-	//{
-	//	pFbx_->Draw(transform_);
-	//}*/
-	//Model::SetTransform(hModel_, transform_);
-	//Model::Draw(hModel_);
+	/*if (pFbx_)
+	{
+		pFbx_->Draw(transform_);
+	}*/
+	Model::SetTransform(hModel_, transform_);
+	Model::Draw(hModel_);
 }
 
 void Player::Release()

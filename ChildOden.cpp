@@ -22,7 +22,7 @@ void ChildOden::Initialize()
 	transform_.scale_.z = 0.3f;
 	transform_.position_.x = 2.0f;
 	transform_.position_.y = 1.0f;
-	hModel_ = Model::Load("Odenkushi.fbx");
+	hModel_ = Model::Load("OdenKushi.fbx");
 	//assert(hModel_ >= 0);
 }
 

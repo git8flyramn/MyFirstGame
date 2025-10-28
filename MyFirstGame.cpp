@@ -142,10 +142,12 @@ int APIENTRY wWinMain(_In_ HINSTANCE hInstance,
         Camera::Update(); // カメラの更新
         Input::Update();
         pRootJob->UpdateSub();
-        pTestScene->Update();
-        
 
-        if (Input::IsKey(DIK_ESCAPE))
+       
+        pTestScene->Update();
+        pPlayer->Update();
+
+      /*  if (Input::IsKey(DIK_ESCAPE))
         {
             static int cnt = 0;
             cnt++;
@@ -153,20 +155,21 @@ int APIENTRY wWinMain(_In_ HINSTANCE hInstance,
             {
                 PostQuitMessage(0);
             }
-        }
-        if (Input::IsKey(DIK_A))
-        {
-            pTestScene->Release();
-        }
+        }*/
+      
+          
+     
        
         Direct3D::BeginDraw();
          //pRootJobから、すべてのオブジェクトの描画
         pRootJob->DrawSub();
-       //pTestScene->Draw();
-       pPlayer->Draw();
-
-      ///*  static Transform trans;
-      //  trans.position_.x = 1.0f;
+        if (Input::IsKey(DIK_SPACE))
+        {
+            pPlayer->Draw();
+            pRootJob->ReleaseSub();
+           
+        }
+       //  trans.position_.x = 1.0f;
       //  trans.rotate_.y  = 0.1f;
       //  trans.Calculation();
       //  fbx->Draw(trans);*/
@@ -183,10 +186,9 @@ int APIENTRY wWinMain(_In_ HINSTANCE hInstance,
        
     }
     Model::Release();
-    pRootJob->ReleaseSub();
+    pRootJob->Release();
     Input::Release();
-   // player->Release();
-   
+    pPlayer->Release();
     Direct3D::Release();
     return (int) msg.wParam;
 }
