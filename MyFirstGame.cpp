@@ -163,12 +163,9 @@ int APIENTRY wWinMain(_In_ HINSTANCE hInstance,
         Direct3D::BeginDraw();
          //pRootJobから、すべてのオブジェクトの描画
         pRootJob->DrawSub();
-        if (Input::IsKey(DIK_SPACE))
-        {
-            pPlayer->Draw();
-            pRootJob->ReleaseSub();
-           
-        }
+        static int cnt = 0;
+        cnt += 1;
+       
        //  trans.position_.x = 1.0f;
       //  trans.rotate_.y  = 0.1f;
       //  trans.Calculation();
@@ -186,7 +183,7 @@ int APIENTRY wWinMain(_In_ HINSTANCE hInstance,
        
     }
     Model::Release();
-    pRootJob->Release();
+   
     Input::Release();
     pPlayer->Release();
     Direct3D::Release();
