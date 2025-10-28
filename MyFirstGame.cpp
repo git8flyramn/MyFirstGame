@@ -9,6 +9,8 @@
 #include "Engine/Input.h"
 #include "Engine/RootJob.h"
 #include "Engine/Model.h"
+#include "TestScene.h"
+#include "Player.h"
 
 #pragma comment(lib, "winmm.lib")
 
@@ -23,7 +25,10 @@ const int WINDOW_WIDTH = 800;
 const int WINDOW_HEIGHT = 600;
 
 RootJob* pRootJob = nullptr;
-
+//先に描画する
+TestScene* pTestScene = nullptr;
+//エンターキーを押した時
+Player* pPlayer = nullptr;
 // グローバル変数:
 HINSTANCE hInst;                                // 現在のインターフェイス
 WCHAR szTitle[MAX_LOADSTRING];                  // タイトル バーのテキスト
@@ -88,10 +93,12 @@ int APIENTRY wWinMain(_In_ HINSTANCE hInstance,
     MSG msg = {};
     //メンバ変数の物
     pRootJob = new RootJob(nullptr);
+    pTestScene = new TestScene(nullptr);
+    pPlayer= new Player(nullptr);
    //ゲームで増える物
     pRootJob->Initialize();
-
-   
+    pTestScene->Initialize();
+    pPlayer->Initialize();
    /* Fbx* fbx = new Fbx();
    fbx->Load("ODEN2.fbx");*/
    // Transform* transform = new Transform();
@@ -134,31 +141,35 @@ int APIENTRY wWinMain(_In_ HINSTANCE hInstance,
         //ゲームの処理
         Camera::Update(); // カメラの更新
         Input::Update();
-
         pRootJob->UpdateSub();
-
-       
+        pTestScene->Update();
+        
 
         if (Input::IsKey(DIK_ESCAPE))
         {
             static int cnt = 0;
             cnt++;
-            if (cnt >= 3)
+            if (cnt > 3)
             {
                 PostQuitMessage(0);
             }
         }
-
-        
-
+        if (Input::IsKey(DIK_A))
+        {
+            pTestScene->Release();
+        }
+       
         Direct3D::BeginDraw();
          //pRootJobから、すべてのオブジェクトの描画
         pRootJob->DrawSub();
-      /*  static Transform trans;
-        trans.position_.x = 1.0f;
-        trans.rotate_.y  = 0.1f;
-        trans.Calculation();
-        fbx->Draw(trans);*/
+       //pTestScene->Draw();
+       pPlayer->Draw();
+
+      ///*  static Transform trans;
+      //  trans.position_.x = 1.0f;
+      //  trans.rotate_.y  = 0.1f;
+      //  trans.Calculation();
+      //  fbx->Draw(trans);*/
 
         Direct3D::EndDraw();
        /* static Transform trans;
@@ -174,6 +185,8 @@ int APIENTRY wWinMain(_In_ HINSTANCE hInstance,
     Model::Release();
     pRootJob->ReleaseSub();
     Input::Release();
+   // player->Release();
+   
     Direct3D::Release();
     return (int) msg.wParam;
 }

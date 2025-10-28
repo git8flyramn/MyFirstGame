@@ -65,11 +65,11 @@ float4 PS(VS_OUT inData) : SV_Target
     float4 color;
     if(useTexture == 1)
     {
-        color = g_texture.Sample(g_sampler, inData.uv) * inData.color;
+        color = g_texture.Sample(g_sampler, inData.uv);
     }
     else
     {
-        color = float4(1, 1, 1, 1);
+        color = diffuseColor;
     }
     return color * inData.color;
 }

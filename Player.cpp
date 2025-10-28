@@ -35,17 +35,17 @@ void Player::Initialize()
 	pLChildOden = (ChildOden*)Instantiate<ChildOden>(this);
 	pRChildOden_->SetPosition(2.0f, 1.0f, 0.0f);
 	pLChildOden->SetPosition(-2.0f, 1.0f, 0.0f);
-	hModel_ = Model::Load("Oden.Fbx");
+	hModel_ = Model::Load("Odenkushi.fbx");
 }
 
 void Player::Draw()
 {
-	/*if (pFbx_)
-	{
-		pFbx_->Draw(transform_);
-	}*/
-	Model::SetTransform(hModel_, transform_);
-	Model::Draw(hModel_);
+	///*if (pFbx_)
+	//{
+	//	pFbx_->Draw(transform_);
+	//}*/
+	//Model::SetTransform(hModel_, transform_);
+	//Model::Draw(hModel_);
 }
 
 void Player::Release()
