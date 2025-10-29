@@ -162,9 +162,23 @@ int APIENTRY wWinMain(_In_ HINSTANCE hInstance,
        
         Direct3D::BeginDraw();
          //pRootJobから、すべてのオブジェクトの描画
-        pRootJob->DrawSub();
-        static int cnt = 0;
-        cnt += 1;
+        static float time = 0.0f;
+        time += 0.03f;
+        if (time <= 3.0f)
+        {
+            pRootJob->DrawSub();
+          
+        }
+        else
+        {
+            pPlayer->Draw();
+        }
+       
+           
+            //pPlayer->Draw();
+           
+       
+       
        
        //  trans.position_.x = 1.0f;
       //  trans.rotate_.y  = 0.1f;
@@ -183,9 +197,9 @@ int APIENTRY wWinMain(_In_ HINSTANCE hInstance,
        
     }
     Model::Release();
-   
+    pRootJob->ReleaseSub();
     Input::Release();
-    pPlayer->Release();
+  //  pPlayer->Release();
     Direct3D::Release();
     return (int) msg.wParam;
 }
