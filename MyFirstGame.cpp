@@ -164,7 +164,7 @@ int APIENTRY wWinMain(_In_ HINSTANCE hInstance,
          //pRootJobから、すべてのオブジェクトの描画
         static float time = 0.0f;
         time += 0.03f;
-        if (time <= 3.0f)
+        if (time <= 25.0f)
         {
             pRootJob->DrawSub();
           
