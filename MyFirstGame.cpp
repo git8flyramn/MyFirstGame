@@ -143,53 +143,66 @@ int APIENTRY wWinMain(_In_ HINSTANCE hInstance,
         Input::Update();
         pRootJob->UpdateSub();
 
-       
-        pTestScene->Update();
+
+      
         pPlayer->Update();
 
-      /*  if (Input::IsKey(DIK_ESCAPE))
-        {
-            static int cnt = 0;
-            cnt++;
-            if (cnt > 3)
-            {
-                PostQuitMessage(0);
-            }
-        }*/
-      
-          
-     
-       
+        /*  if (Input::IsKey(DIK_ESCAPE))
+          {
+              static int cnt = 0;
+              cnt++;
+              if (cnt > 3)
+              {
+                  PostQuitMessage(0);
+              }
+          }*/
+
+
+
+
         Direct3D::BeginDraw();
-         //pRootJobから、すべてのオブジェクトの描画
-        pRootJob->DrawSub();
-        static int cnt = 0;
-        cnt += 1;
-       
-       //  trans.position_.x = 1.0f;
-      //  trans.rotate_.y  = 0.1f;
-      //  trans.Calculation();
-      //  fbx->Draw(trans);*/
+        //pRootJobから、すべてのオブジェクトの描画
+        static float time = 0.0f;
+        time += 0.03f;
+        if (time <= 20.0f)
+        {
+            pRootJob->DrawSub();
+            pTestScene->Update();
+        }
+        else
+        {
+            pPlayer->Draw();
+        }
+
+
+        //pPlayer->Draw();
+
+
+
+
+   //  trans.position_.x = 1.0f;
+  //  trans.rotate_.y  = 0.1f;
+  //  trans.Calculation();
+  //  fbx->Draw(trans);*/
 
         Direct3D::EndDraw();
-       /* static Transform trans;
-        trans.position_.x = 1.0f;
-        trans.position_.y += 0.1f;
-        trans.rotate_.z  = 0.0f;
-        trans.rotate_.y += +1.0f;
-        trans.Calculation();
-        fbx->Draw(trans);   
-       Direct3D::EndDraw();*/
-       
+        /* static Transform trans;
+         trans.position_.x = 1.0f;
+         trans.position_.y += 0.1f;
+         trans.rotate_.z  = 0.0f;
+         trans.rotate_.y += +1.0f;
+         trans.Calculation();
+         fbx->Draw(trans);
+        Direct3D::EndDraw();*/
+
     }
     Model::Release();
-   
+    pRootJob->ReleaseSub();
     Input::Release();
-    pPlayer->Release();
+    //  pPlayer->Release();
     Direct3D::Release();
-    return (int) msg.wParam;
+    return (int)msg.wParam;
 }
-
 
 
 //

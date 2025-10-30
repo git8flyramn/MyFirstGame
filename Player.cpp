@@ -14,11 +14,17 @@ Player::~Player()
 
 void Player::Update()
 {
+
+	static float x = 0.0;
+	float tx = sin(x) * 5.0f;
+	x += 0.02f;
+	transform_.position_.x = tx;
 	transform_.rotate_.y += 1.0f;
-	if (transform_.rotate_.y > 720.0f)
-	{
-		//KillMe();
-	}
+	//transform_.rotate_.y += 1.0f;
+	//if (transform_.rotate_.y > 720.0f)
+	//{
+	//	//KillMe();
+	//}
 }
 
 void Player::Initialize()
@@ -31,11 +37,12 @@ void Player::Initialize()
 	transform_.scale_.y = 0.7f;
 	transform_.scale_.z = 0.7f;
 	//子のオブジェクトにChildOdenを追加する
+	hModel_ = Model::Load("Oden.fbx");
 	pRChildOden_ = (ChildOden*)Instantiate<ChildOden>(this);
 	pLChildOden = (ChildOden*)Instantiate<ChildOden>(this);
 	pRChildOden_->SetPosition(2.0f, 1.0f, 0.0f);
 	pLChildOden->SetPosition(-2.0f, 1.0f, 0.0f);
-	hModel_ = Model::Load("Odenkushi.fbx");
+
 }
 
 void Player::Draw()
@@ -50,10 +57,10 @@ void Player::Draw()
 
 void Player::Release()
 {
-	if (pFbx_)
-	{
-		pFbx_->Release();
-		delete pFbx_;
-		pFbx_ = nullptr;
-	}
+	//if (pFbx_)
+	//{
+	//	pFbx_->Release();
+	//	delete pFbx_;
+	//	pFbx_ = nullptr;
+	//}
 }
