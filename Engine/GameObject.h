@@ -5,6 +5,7 @@
 
 using std::string;
 using std::list;
+class SphrereCollider;
 class GameObject
 {
 public:
@@ -28,6 +29,11 @@ public:
 	GameObject* GetRootJob();
 	GameObject* FindChildObject(const string& name);
 	GameObject* FindObject(const string& name);
+
+	void AddCollider(SphrereCollider pCollider);
+	void Collision(GameObject* pTarget);
+	//全てのオブジェクトとの総当たり戦
+	void RoundRobin(GameObject* pTarget);
 	
 	template<class T>
 	GameObject* Instantiate(GameObject* parent)
@@ -39,9 +45,10 @@ public:
 	}
 protected:
 	list<GameObject*> childList_;
-	Transform transform_;
-	GameObject* pParent_;
-	string	objectName_;
+	Transform         transform_;
+	GameObject*         pParent_;
+	string	         objectName_;
+	SphrereCollider*  pCollider_;
 private:
 	bool isDead_;
 

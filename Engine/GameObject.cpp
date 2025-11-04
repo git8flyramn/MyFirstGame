@@ -126,3 +126,15 @@ GameObject* GameObject::FindObject(const string& name)
 	return result;
 }
 
+void GameObject::AddCollider(SphrereCollider pCollider)
+{
+}
+
+void GameObject::Collision(GameObject* pTarget)
+{
+}
+
+void GameObject::RoundRobin(GameObject* pTarget)
+{
+}
+
