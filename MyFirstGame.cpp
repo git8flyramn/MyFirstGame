@@ -142,9 +142,6 @@ int APIENTRY wWinMain(_In_ HINSTANCE hInstance,
         Camera::Update(); // カメラの更新
         Input::Update();
         pRootJob->UpdateSub();
-
-
-      
         pPlayer->Update();
 
         /*  if (Input::IsKey(DIK_ESCAPE))
@@ -167,15 +164,14 @@ int APIENTRY wWinMain(_In_ HINSTANCE hInstance,
         if (time <= 20.0f)
         {
             pRootJob->DrawSub();
-            pTestScene->Update();
+          
         }
         else
-        {
+        { 
+          pTestScene->Update();
             pPlayer->Draw();
         }
-
-
-        //pPlayer->Draw();
+       
 
 
 

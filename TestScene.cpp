@@ -1,6 +1,7 @@
 #include "TestScene.h"
 #include "Engine//Fbx.h"
 #include "Engine//Model.h"
+#include "Engine/Input.h"
 TestScene::TestScene(GameObject* parent)
 	: GameObject(parent,"TestScene")
 {
@@ -29,9 +30,15 @@ void TestScene::Initialize()
 void TestScene::Update()
 {
 	//スペースキーを押したら,SceneManager::ChangeScene(SCENE_ID_PLAY);を呼び出す
-	SceneManager* pScene = nullptr;
-	pScene = new SceneManager(nullptr);
-	pScene->ChangeScene(SCENE_ID_PLAY);
+    
+	   if(Input::IsKeyDown(DIK_SPACE))
+	   {
+	     SceneManager* pScene = (SceneManager*)FindObject("SceneManeger");
+	    pScene->ChangeScene(SCENE_ID_PLAY);
+	   }
+	
+	/*SceneManager* pScene = (SceneManager*)FindObject("SceneManeger");
+	pScene->ChangeScene(SCENE_ID_PLAY);*/
 	 
 }
 
