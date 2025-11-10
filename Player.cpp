@@ -2,6 +2,8 @@
 #include "Engine//Fbx.h"
 #include "ChildOden.h"
 #include "Engine/Model.h"
+#include "Engine/Input.h"
+#include "Engine/SphereCollider.h"
 Player::Player(GameObject* parent)
 	:GameObject(parent,"Player"),pFbx_(nullptr)
 {
@@ -18,8 +20,12 @@ void Player::Update()
 	static float x = 0.0;
 	float tx = sin(x) * 5.0f;
 	x += 0.02f;
-	transform_.position_.x = tx;
+	//transform_.position_.x = tx;
 	transform_.rotate_.y += 1.0f;
+	if (Input::IsKey(DIK_SPACE))
+	{
+		transform_.position_.z += 0.2f;
+	}
 	//transform_.rotate_.y += 1.0f;
 	//if (transform_.rotate_.y > 720.0f)
 	//{
@@ -43,6 +49,8 @@ void Player::Initialize()
 	pRChildOden_->SetPosition(2.0f, 1.0f, 0.0f);
 	pLChildOden->SetPosition(-2.0f, 1.0f, 0.0f);
 
+	SphereCollider* col = new SphereCollider(1.0f);
+	AddCollider(col);
 }
 
 void Player::Draw()
