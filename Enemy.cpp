@@ -16,7 +16,7 @@ void Enemy::Update()
 void Enemy::Initialize()
 {
 	pFbx = new Fbx;
-	pFbx->Load("OdenKushiZasi.fbx");
+	pFbx->Load("daikon.fbx");
 	transform_.position_ = { 0.0f,0.0f,50.0f };
 	SphereCollider* col = new SphereCollider(0.5);
 	AddCollider(col);

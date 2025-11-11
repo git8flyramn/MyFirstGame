@@ -21,10 +21,14 @@ GameObject::~GameObject()
 void GameObject::DrawSub()
 {
 	
-	this->Draw();
-	for (auto itr = childList_.begin(); itr != childList_.end(); itr++)
+	Draw();
+	/*for (auto itr = childList_.begin(); itr != childList_.end(); itr++)
 	{
 		(*itr)->DrawSub();
+	}*/
+	for (auto child : childList_)
+	{
+		child->DrawSub();
 	}
 	
 	/*for(auto child : childList_)
@@ -145,7 +149,7 @@ void GameObject::Collision(GameObject* pTarget)
 		         (thisP.z - tgtP.z) * (thisP.z - tgtP.z);
 	if (dist <= thre)
 	{
-		//MessageBoxA(0, "ぶつかった", "Collider", MB_OK);
+		MessageBoxA(0, "ぶつかった", "Collider", MB_OK);
 	}
 }
 
@@ -157,7 +161,7 @@ void GameObject::RoundRobin(GameObject* pTarget)
 		return;
 	}
    ////2 自分とターゲット自体のコライダーの当たり判定
-	if (pTarget->pCollider_ != nullptr)
+	if (pTarget->pCollider_ != nullptr && pTarget->pCollider_ != pCollider_)
 	{
 		Collision(pTarget);
 	}

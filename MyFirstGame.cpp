@@ -147,6 +147,7 @@ int APIENTRY wWinMain(_In_ HINSTANCE hInstance,
         Camera::Update(); // カメラの更新
         Input::Update();
         pRootJob->UpdateSub();
+        pPlayer->Update();
         enemy->Update();
 
         //pPlayer->Update();
@@ -180,9 +181,7 @@ int APIENTRY wWinMain(_In_ HINSTANCE hInstance,
         }
        */
         pRootJob->DrawSub();
-        pTestScene->Update();
         pPlayer->Draw();
-        enemy->Draw();
         Direct3D::EndDraw();
 
 
@@ -205,7 +204,6 @@ int APIENTRY wWinMain(_In_ HINSTANCE hInstance,
     Model::Release();
     pRootJob->ReleaseSub();
     Input::Release();
-    //  pPlayer->Release();
     Direct3D::Release();
     return (int)msg.wParam;
 }

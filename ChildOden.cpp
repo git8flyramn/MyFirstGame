@@ -2,7 +2,7 @@
 #include "Engine//Fbx.h"
 #include "Engine//Model.h"
 ChildOden::ChildOden(GameObject* parent)
-	:GameObject(parent, "ChildOden"),hModel_(-1),pFbx_(nullptr)
+	:GameObject(parent, "ChildOden"),pFbx_(nullptr)
 {
 	
     
@@ -22,8 +22,8 @@ void ChildOden::Initialize()
 	transform_.scale_.z = 0.3f;
 	transform_.position_.x = 2.0f;
 	transform_.position_.y = 1.0f;
-	hModel_ = Model::Load("Odenkushi.fbx");
-	//assert(hModel_ >= 0);
+	hModel_ = Model::Load("OdenkushiZasi.fbx");
+	assert(hModel_ >= 0);
 }
 
 void ChildOden::Update()

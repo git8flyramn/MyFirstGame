@@ -9,7 +9,7 @@ namespace Input
     BYTE prevKeyState[256] = { 0 };
 
     //マウスインプット
-    LPDIRECTINPUTDEVICE pMouseDevice = nullptr;
+    LPDIRECTINPUTDEVICE8 pMouseDevice = nullptr;
     DIMOUSESTATE mouseState; //マウスの状態
     DIMOUSESTATE prevMouseState;//前回のマウスの状態
     XMVECTOR mouseposition;
@@ -20,7 +20,12 @@ namespace Input
         pDInput->CreateDevice(GUID_SysKeyboard, &pKeyDevice, nullptr);
         pKeyDevice->SetDataFormat(&c_dfDIKeyboard);
         pKeyDevice->SetCooperativeLevel(hWnd, DISCL_NONEXCLUSIVE | DISCL_BACKGROUND);
-       
+        
+        //マウスデバイスの初期化
+        pDInput->CreateDevice(GUID_SysMouse,&pMouseDevice, nullptr);
+        pMouseDevice->SetDataFormat(&c_dfDIMouse);
+        pMouseDevice->SetCooperativeLevel(hWnd, DISCL_NONEXCLUSIVE | DISCL_BACKGROUND);
+
     }
 
     void Input::Update()
@@ -34,9 +39,9 @@ namespace Input
         pKeyDevice->GetDeviceState(sizeof(keyState), &keyState);
 
         ////マウスの状態の保存
-        //pMouseDevice->Acquire();
-        //memcpy(&prevMouseState, &mouseState, sizeof(mouseState));
-        //pMouseDevice->GetDeviceState(sizeof(mouseState), &mouseState);
+        pMouseDevice->Acquire();
+        memcpy(&prevMouseState, &mouseState, sizeof(mouseState));
+        pMouseDevice->GetDeviceState(sizeof(mouseState), &mouseState);
     }
 
     bool Input::IsKey(int keyCode)
