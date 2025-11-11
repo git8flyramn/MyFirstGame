@@ -44,6 +44,20 @@ void GameObject::UpdateSub()
 		child->UpdateSub();
 	}
 
+	for (auto itr = childList_.begin(); itr != childList_.end();)
+	{
+		if ((*itr)->isDead_)
+		{
+			(*itr)->ReleaseSub();
+			delete(*itr);
+			itr = childList_.erase(itr);
+		}
+		else
+		{
+			itr++;
+		}
+	}
+
 }
 
 void GameObject::ReleaseSub()
@@ -54,21 +68,7 @@ void GameObject::ReleaseSub()
 		child->ReleaseSub();
 	}
 	
-	for (auto itr = childList_.begin(); itr != childList_.end();)
-	{
-		if ((*itr)->isDead_)
-		{
-			(*itr)->ReleaseSub();
-			//isDead_のtrueの場所のポインタを消す
-			delete(*itr);
-			//isDead_のtrueがあった場所の次の場所を指す。
-			itr = childList_.erase(itr);
-		}
-		else
-		{
-			itr++;
-		}
-	}
+	
 }
 
 void GameObject::SetPosition(XMFLOAT3 position)

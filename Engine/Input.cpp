@@ -1,7 +1,5 @@
 #include "Input.h"
-#include <DirectXMath.h>
 
-using namespace DirectX;
 namespace Input
 {
     //キーボードインプット
@@ -34,6 +32,11 @@ namespace Input
         }
         pKeyDevice->Acquire();
         pKeyDevice->GetDeviceState(sizeof(keyState), &keyState);
+
+        ////マウスの状態の保存
+        //pMouseDevice->Acquire();
+        //memcpy(&prevMouseState, &mouseState, sizeof(mouseState));
+        //pMouseDevice->GetDeviceState(sizeof(mouseState), &mouseState);
     }
 
     bool Input::IsKey(int keyCode)
@@ -80,6 +83,10 @@ namespace Input
 
     bool Input::IsMouseButton(int btnCode)
     {
+        if (mouseState.rgbButtons[btnCode] & 0x80)
+        {
+            return true;
+        }
         return false;
     }
 

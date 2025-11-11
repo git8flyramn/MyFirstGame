@@ -14,6 +14,30 @@ Player::~Player()
 {
 }
 
+
+
+void Player::Initialize()
+{
+	//pFbx_ = new Fbx;
+	////pFbx_がNullptrじゃなかったら、のチェックをしておくと
+	////良い。
+	//pFbx_->Load("Oden.fbx");
+	//transform_.scale_.x = 0.7f;
+	//transform_.scale_.y = 0.7f;
+	//transform_.scale_.z = 0.7f;
+	//子のオブジェクトにChildOdenを追加する
+	hModel_ = Model::Load("Odenkushi.fbx");
+	//assert(hModel_ > 0);
+	pRChildOden_ = (ChildOden*)Instantiate<ChildOden>(this);
+	pLChildOden = (ChildOden*)Instantiate<ChildOden>(this);
+	pRChildOden_->SetPosition(2.0f, 1.0f, 0.0f);
+	pLChildOden->SetPosition(-2.0f, 1.0f, 0.0f);
+
+	SphereCollider* col = new SphereCollider(0.5f);
+	AddCollider(col);
+
+}
+
 void Player::Update()
 {
 
@@ -26,31 +50,10 @@ void Player::Update()
 	{
 		transform_.position_.z += 0.2f;
 	}
-	//transform_.rotate_.y += 1.0f;
 	//if (transform_.rotate_.y > 720.0f)
 	//{
 	//	//KillMe();
 	//}
-}
-
-void Player::Initialize()
-{
-	//pFbx_ = new Fbx;
-	////pFbx_がNullptrじゃなかったら、のチェックをしておくと
-	////良い。
-	//pFbx_->Load("Oden.fbx");
-	transform_.scale_.x = 0.7f;
-	transform_.scale_.y = 0.7f;
-	transform_.scale_.z = 0.7f;
-	//子のオブジェクトにChildOdenを追加する
-	hModel_ = Model::Load("Oden.fbx");
-	pRChildOden_ = (ChildOden*)Instantiate<ChildOden>(this);
-	pLChildOden = (ChildOden*)Instantiate<ChildOden>(this);
-	pRChildOden_->SetPosition(2.0f, 1.0f, 0.0f);
-	pLChildOden->SetPosition(-2.0f, 1.0f, 0.0f);
-
-	SphereCollider* col = new SphereCollider(1.0f);
-	AddCollider(col);
 }
 
 void Player::Draw()

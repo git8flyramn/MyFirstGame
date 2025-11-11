@@ -4,6 +4,7 @@ namespace Model
 {
 	std::vector<ModelData*> modelList;
 }
+
 int Model::Load(std::string filename)
 {
 	ModelData* pModelData = new ModelData;

@@ -11,6 +11,7 @@
 #include "Engine/Model.h"
 #include "TestScene.h"
 #include "Player.h"
+#include "Enemy.h"
 
 #pragma comment(lib, "winmm.lib")
 
@@ -29,6 +30,8 @@ RootJob* pRootJob = nullptr;
 TestScene* pTestScene = nullptr;
 //エンターキーを押した時
 Player* pPlayer = nullptr;
+
+Enemy* enemy = nullptr;
 // グローバル変数:
 HINSTANCE hInst;                                // 現在のインターフェイス
 WCHAR szTitle[MAX_LOADSTRING];                  // タイトル バーのテキスト
@@ -95,10 +98,12 @@ int APIENTRY wWinMain(_In_ HINSTANCE hInstance,
     pRootJob = new RootJob(nullptr);
     pTestScene = new TestScene(nullptr);
     pPlayer= new Player(nullptr);
+    enemy = new Enemy(nullptr);
    //ゲームで増える物
     pRootJob->Initialize();
     pTestScene->Initialize();
     pPlayer->Initialize();
+    enemy->Initialize();
    /* Fbx* fbx = new Fbx();
    fbx->Load("ODEN2.fbx");*/
    // Transform* transform = new Transform();
@@ -142,9 +147,11 @@ int APIENTRY wWinMain(_In_ HINSTANCE hInstance,
         Camera::Update(); // カメラの更新
         Input::Update();
         pRootJob->UpdateSub();
-        pPlayer->Update();
+        enemy->Update();
 
-        /*  if (Input::IsKey(DIK_ESCAPE))
+        //pPlayer->Update();
+
+          if (Input::IsKey(DIK_ESCAPE))
           {
               static int cnt = 0;
               cnt++;
@@ -152,16 +159,16 @@ int APIENTRY wWinMain(_In_ HINSTANCE hInstance,
               {
                   PostQuitMessage(0);
               }
-          }*/
+          }
 
 
 
 
         Direct3D::BeginDraw();
         //pRootJobから、すべてのオブジェクトの描画
-        static float time = 0.0f;
+       /* static float time = 0.0f;
         time += 0.03f;
-        if (time <= 20.0f)
+        if (time <= 10.0f)
         {
             pRootJob->DrawSub();
           
@@ -171,9 +178,12 @@ int APIENTRY wWinMain(_In_ HINSTANCE hInstance,
           pTestScene->Update();
             pPlayer->Draw();
         }
-       
-
-
+       */
+        pRootJob->DrawSub();
+        pTestScene->Update();
+        pPlayer->Draw();
+        enemy->Draw();
+        Direct3D::EndDraw();
 
 
    //  trans.position_.x = 1.0f;
@@ -181,7 +191,7 @@ int APIENTRY wWinMain(_In_ HINSTANCE hInstance,
   //  trans.Calculation();
   //  fbx->Draw(trans);*/
 
-        Direct3D::EndDraw();
+        
         /* static Transform trans;
          trans.position_.x = 1.0f;
          trans.position_.y += 0.1f;

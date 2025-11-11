@@ -11,9 +11,10 @@ enum SCENE_ID
 class SceneManager
 	: public GameObject
 {
-public:
+private:
 	SCENE_ID currentSceneID_;
 	SCENE_ID nextSceneID_;
+public:
 	SceneManager(GameObject* parent);
 	~SceneManager();
 	void Initialize() override;
@@ -21,8 +22,6 @@ public:
 	void Draw() override;
 	void Release() override;
 	void ChangeScene(SCENE_ID _nextScene);
-
-private:
 
 };
 
