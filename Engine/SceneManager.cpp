@@ -26,7 +26,7 @@ void SceneManager::Update()
 	{
 		//ƒV[ƒ“Ø‚è‘Ö‚¦ˆ—
 		auto scene = childList_.front();
-		(scene)->ReleaseSub();
+		scene->ReleaseSub();
 		SAFE_DELETE(scene);
 		childList_.clear();
 		//Model::Release();

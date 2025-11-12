@@ -2,6 +2,7 @@
 //
 
 #include "framework.h"
+
 #include "MyFirstGame.h"
 #include "Engine/Direct3D.h"
 #include "Engine/Camera.h"
@@ -9,9 +10,9 @@
 #include "Engine/Input.h"
 #include "Engine/RootJob.h"
 #include "Engine/Model.h"
-#include "TestScene.h"
-#include "Player.h"
-#include "Enemy.h"
+//#include "TestScene.h"
+//#include "Player.h"
+//#include "Enemy.h"
 
 #pragma comment(lib, "winmm.lib")
 
@@ -27,11 +28,11 @@ const int WINDOW_HEIGHT = 600;
 
 RootJob* pRootJob = nullptr;
 //先に描画する
-TestScene* pTestScene = nullptr;
+//TestScene* pTestScene = nullptr;
 //エンターキーを押した時
-Player* pPlayer = nullptr;
+//Player* pPlayer = nullptr;
 
-Enemy* enemy = nullptr;
+//Enemy* enemy = nullptr;
 // グローバル変数:
 HINSTANCE hInst;                                // 現在のインターフェイス
 WCHAR szTitle[MAX_LOADSTRING];                  // タイトル バーのテキスト
@@ -96,19 +97,15 @@ int APIENTRY wWinMain(_In_ HINSTANCE hInstance,
     MSG msg = {};
     //メンバ変数の物
     pRootJob = new RootJob(nullptr);
-    pTestScene = new TestScene(nullptr);
-    pPlayer= new Player(nullptr);
-    enemy = new Enemy(nullptr);
+    //pTestScene = new TestScene(nullptr);
+    //pPlayer= new Player(nullptr);
+    //enemy = new Enemy(nullptr);
    //ゲームで増える物
     pRootJob->Initialize();
-    pTestScene->Initialize();
-    pPlayer->Initialize();
-    enemy->Initialize();
-   /* Fbx* fbx = new Fbx();
-   fbx->Load("ODEN2.fbx");*/
+    //pTestScene->Initialize();
+    //pPlayer->Initialize();
+   // enemy->Initialize();
    // Transform* transform = new Transform();
- //  Dice* dice = new Dice();
-  // hr = dice->Initialize();
   // hr = sprite->Initialize();
   //  ZeroMemory(&msg, sizeof(msg));
     // メイン メッセージ ループ:　ユーザー操作(クリックやキー入力)を受け取り、処理を続ける仕組み
@@ -147,8 +144,8 @@ int APIENTRY wWinMain(_In_ HINSTANCE hInstance,
         Camera::Update(); // カメラの更新
         Input::Update();
         pRootJob->UpdateSub();
-        pPlayer->Update();
-        enemy->Update();
+        //pPlayer->Update();
+       // enemy->Update();
 
         //pPlayer->Update();
 
@@ -181,7 +178,7 @@ int APIENTRY wWinMain(_In_ HINSTANCE hInstance,
         }
        */
         pRootJob->DrawSub();
-        pPlayer->Draw();
+        //pPlayer->Draw();
         Direct3D::EndDraw();
 
 

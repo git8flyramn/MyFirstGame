@@ -1,6 +1,5 @@
 #pragma once
 #include "Engine//GameObject.h"
-#include "Engine//SceneManager.h"
 class TestScene :
     public GameObject
 {
@@ -11,7 +10,5 @@ public:
 	void Update() override;
 	void Draw() override;
 	void Release() override;
-private:
-	int hModel_;
 };
 
