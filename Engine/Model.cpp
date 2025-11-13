@@ -59,7 +59,6 @@ void Model::Release()
 			SAFE_DELETE(modelList[i]->pfbx_);
 		}
 		SAFE_DELETE(modelList[i]);
-
 	}
 	modelList.clear(); //”z—ñ‚Ì’†g‚ð‹ó‚É‚·‚é(”O‚Ì‚½‚ß‚É)
 }

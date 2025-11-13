@@ -30,12 +30,6 @@ void GameObject::DrawSub()
 	{
 		child->DrawSub();
 	}
-	
-	/*for(auto child : childList_)
-	* {
-	*    child->DrawSub();
-	* }
-	*/
 }
 
 void GameObject::UpdateSub()
@@ -43,6 +37,7 @@ void GameObject::UpdateSub()
 	//本体の機能を呼び出す
 	transform_.Calculation();
 	this->Update();
+	RoundRobin(GetRootJob());
 	for (auto child : childList_)
 	{
 		child->UpdateSub();
@@ -170,5 +165,9 @@ void GameObject::RoundRobin(GameObject* pTarget)
 	{
 		RoundRobin(itr);
 	}
+}
+
+void GameObject::OnCollisiton()
+{
 }
 
