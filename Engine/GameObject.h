@@ -37,6 +37,7 @@ public:
 	void Collision(GameObject* pTarget);
 	//全てのオブジェクトとの総当たり戦
 	void RoundRobin(GameObject* pTarget);
+	void OnCollisiton();
 	
 	template<class T>
 	GameObject* Instantiate(GameObject* parent)

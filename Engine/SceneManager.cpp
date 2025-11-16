@@ -4,7 +4,7 @@
 #include "Direct3D.h"
 #include "Model.h"
 SceneManager::SceneManager(GameObject* parent)
-	:GameObject(parent,"SceneManager")
+	:GameObject(parent, "SceneManager")
 {
 }
 

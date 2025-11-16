@@ -7,7 +7,7 @@ Transform::Transform()
 {
     position_ = XMFLOAT3(0.0f, 0.0f, 0.0f);
     rotate_ = XMFLOAT3(0.0f, 0.0f, 0.0f);
-    scale_ = XMFLOAT3(0.0f, 0.0f, 0.0f);
+    scale_ = XMFLOAT3(1.0f, 1.0f, 1.0f);
 }
 Transform::~Transform()
 {
@@ -31,7 +31,7 @@ XMMATRIX Transform::GetWorldMatrix()
 {
     if (pParent_ != nullptr)
     {
-        matScale_* matRotate_* matTranslate_* pParent_->GetWorldMatrix();
+        return matScale_* matRotate_* matTranslate_* pParent_->GetWorldMatrix();
     }
     return matScale_ * matRotate_ * matTranslate_;
 }

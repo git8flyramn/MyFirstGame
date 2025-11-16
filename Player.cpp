@@ -18,15 +18,15 @@ Player::~Player()
 
 void Player::Initialize()
 {
-	//pFbx_ = new Fbx;
+	 //pFbx_ = new Fbx;
 	////pFbx_がNullptrじゃなかったら、のチェックをしておくと
 	////良い。
-	 hModel_ = Model::Load("Odenkushi.fbx");
+	 hModel_ = Model::Load("OdenKushiZasi.fbx");
 	//assert(hModel_ > 0);
 	//pFbx_->Load("Oden.fbx");
-	//transform_.scale_.x = 0.7f;
-	//transform_.scale_.y = 0.7f;
-	//transform_.scale_.z = 0.7f;
+	transform_.scale_.x = 0.5f;
+	transform_.scale_.y = 0.5f;
+	transform_.scale_.z = 0.5f;
 	//子のオブジェクトにChildOdenを追加する
 	pRChildOden_ = (ChildOden*)Instantiate<ChildOden>(this);
 	pLChildOden = (ChildOden*)Instantiate<ChildOden>(this);
@@ -45,10 +45,11 @@ void Player::Update()
 	x += 0.02f;
 	//transform_.position_.x = tx;
 	transform_.rotate_.y += 1.0f;
-	if (Input::IsKey(DIK_S))
+	if (Input::IsKey(DIK_A))
 	{
 		transform_.position_.z += 0.2f;
 	}
+
 	//if (transform_.rotate_.y > 720.0f)
 	//{
 	//	//KillMe();
