@@ -24,10 +24,10 @@ HRESULT Texture::Load(std::string fileName)
 	//実際に読んでゆくぅ　　　　　 
 	std::wstring wfileName(fileName.begin(), fileName.end());
 	hr = LoadFromWICFile(wfileName.c_str(), WIC_FLAGS::WIC_FLAGS_NONE, &metadata, image);
-	/*if (FALSE(hr))
+	if (FALSE(hr))
 	{
 		return S_FALSE;
-	}*/
+	}
 
 	D3D11_SAMPLER_DESC  SamDesc;
 	ZeroMemory(&SamDesc, sizeof(D3D11_SAMPLER_DESC));
@@ -43,11 +43,9 @@ HRESULT Texture::Load(std::string fileName)
 
 	srv.Format = DXGI_FORMAT_R8G8B8A8_UNORM;
 
-	srv.ViewDimension = D3D11_SRV_DIMENSION_TEXTURE2D;
-
 	srv.Texture2D.MipLevels = 1;
 
-
+	srv.ViewDimension = D3D11_SRV_DIMENSION_TEXTURE2D;
 
 	hr = CreateShaderResourceView(Direct3D::pDevice,image.GetImages(),
 		                          image.GetImageCount(), metadata, &pSRV_);

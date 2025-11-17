@@ -15,7 +15,7 @@ public:
 private:
    // Fbx* pFbx_;
     ChildOden* pRChildOden_;
-    ChildOden* pLChildOden;
+    ChildOden* pLChildOden_;
     int hModel_;
 };
 
