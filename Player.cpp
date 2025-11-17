@@ -21,7 +21,7 @@ void Player::Initialize()
 	 //pFbx_ = new Fbx;
 	////pFbx_がNullptrじゃなかったら、のチェックをしておくと
 	////良い。
-	 hModel_ = Model::Load("OdenKushi.fbx");
+	 hModel_ = Model::Load("model.fbx");
 	assert(hModel_ >= 0);
 	//pFbx_->Load("Oden.fbx");
 	transform_.scale_.x = 0.7f;
