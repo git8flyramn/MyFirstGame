@@ -178,7 +178,7 @@ HRESULT Direct3D::InitShader2D()
 
     // 頂点シェーダの作成（コンパイル）
     ID3DBlob* pCompileVS = nullptr;
-    D3DCompileFromFile(L"Simple2D.hlsl", nullptr, nullptr, "PS", "vs_5_0", NULL, 0, &pCompileVS, NULL);
+    D3DCompileFromFile(L"Simple2D.hlsl", nullptr, nullptr, "VS", "vs_5_0", NULL, 0, &pCompileVS, NULL);
     assert(pCompileVS != nullptr);
 
 

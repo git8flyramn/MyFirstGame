@@ -17,7 +17,7 @@ void Enemy::Initialize()
 {
 	pFbx = new Fbx;
 	pFbx->Load("box.fbx");
-	transform_.position_ = { 5.0f,0.0f,50.0f };
+	transform_.position_ = { 0.0f,0.0f,20.0f };
 	SphereCollider* col = new SphereCollider(0.5f);
 	AddCollider(col);
 }

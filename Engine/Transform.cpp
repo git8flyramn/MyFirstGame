@@ -18,7 +18,7 @@ Transform::~Transform()
 void Transform::Calculation()
 {
 
-    matTranslate_ = XMMatrixTranslation(position_.x, position_.y, position_.y);
+    matTranslate_ = XMMatrixTranslation(position_.x, position_.y, position_.z);
 
     matRotate_ = XMMatrixRotationRollPitchYaw(XMConvertToRadians(rotate_.x),
         XMConvertToRadians(rotate_.y), XMConvertToRadians(rotate_.z));

@@ -53,6 +53,10 @@ void Player::Update()
 	 {
 		 transform_.position_.x -= 0.2f;
 	 }
+	 if (Input::IsKey(DIK_S))
+	 {
+		 transform_.position_.z += 0.2f;
+	 }
 	//if (transform_.rotate_.y > 720.0f)
 	//{
 	//	//KillMe();
