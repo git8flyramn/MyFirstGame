@@ -14,5 +14,7 @@ public:
 	void Release()override;
 private:
 	Fbx* pFbx;
+	bool isShot;
+	int life;
 };
 

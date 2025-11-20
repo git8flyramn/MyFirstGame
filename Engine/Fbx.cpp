@@ -300,7 +300,6 @@ void Fbx::InitMaterial(FbxNode* pNode)
 			else
 			{
 				//テクスチャファイルが無いときの処理(エラー）
-
 			}
 
 		}
