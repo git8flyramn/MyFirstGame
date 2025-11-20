@@ -24,9 +24,9 @@ void Player::Initialize()
 	 hModel_ = Model::Load("oden.fbx");
 	assert(hModel_ >= 0);
 	//pFbx_->Load("Oden.fbx");
-	transform_.scale_.x = 0.3f;
-	transform_.scale_.y = 0.3f;
-	transform_.scale_.z = 0.3f;
+	transform_.scale_.x = 0.5f;
+	transform_.scale_.y = 0.5f;
+	transform_.scale_.z = 0.5f;
 	//子のオブジェクトにChildOdenを追加する
 	pRChildOden_ = (ChildOden*)Instantiate<ChildOden>(this);
 	pLChildOden_ = (ChildOden*)Instantiate<ChildOden>(this);
@@ -61,6 +61,11 @@ void Player::Update()
 	 {
 		 transform_.position_.y -= 0.2f;
 	 }
+	 if (Input::IsKey(DIK_A))
+	 {
+		 transform_.position_.x -= 0.2f;
+
+	 }
 	//if (transform_.rotate_.y > 720.0f)
 	//{
 	//	//KillMe();
@@ -85,4 +90,10 @@ void Player::Release()
 		delete pFbx_;
 		pFbx_ = nullptr;
 	}*/
+}
+
+void Player::GetPosition()
+{
+	XMFLOAT3 trans;
+	trans = transform_.position_;
 }

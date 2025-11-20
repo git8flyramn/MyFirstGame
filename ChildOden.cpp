@@ -20,8 +20,11 @@ void ChildOden::Initialize()
 	transform_.position_.x = -0.3f;
 	transform_.position_.y = -0.3f;
 	transform_.position_.z = -0.3f;
-	transform_.position_.x = 0.0f;
-	transform_.position_.y = 0.0f;
+	transform_.scale_.x = 0.5f;
+	transform_.scale_.y = 0.5f;
+	transform_.scale_.z = 0.5f;
+
+
 	hModel_ = Model::Load("OdenkushiZasi.fbx");
 	assert(hModel_ >= 0);
 }

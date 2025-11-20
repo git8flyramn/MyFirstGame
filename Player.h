@@ -12,6 +12,7 @@ public:
     void Initialize() override;
     void Draw() override;
     void Release() override;
+    void GetPosition();
 private:
    // Fbx* pFbx_;
     ChildOden* pRChildOden_;

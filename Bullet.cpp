@@ -2,8 +2,9 @@
 #include "Engine//SphereCollider.h"
 #include "Engine/Input.h"
 #include "Engine/Model.h"
+#include "Player.h"
 Bullet::Bullet(GameObject* parent) 
-	:GameObject(parent, "Bullet"), pFbx(nullptr),isShot(false),life(90)
+	:GameObject(parent, "Bullet"), pFbx(nullptr),isShot(false),life(60)
 {
 
 }
@@ -18,9 +19,8 @@ void Bullet::Initialize()
 	transform_.scale_.x = 0.5f;
 	transform_.scale_.y = 0.5f;
 	transform_.scale_.z = 0.5f;
-    pFbx->Load("daikon.fbx");
-	//transform.position_ = {pTransformX,pTransformY}
-    transform_.position_ = { 1.0f,-2.0f,0.0f };
+	pFbx->Load("daikon.fbx");
+    transform_.position_ = { 2.0f,1.0f,0.0f};
 	SphereCollider* col = new SphereCollider(0.5f);
 	AddCollider(col);
 }
@@ -29,15 +29,36 @@ void Bullet::Update()
 {
 	
 		if (Input::IsKey(DIK_SPACE))
-  		{
-			life--;
-			transform_.position_.z += 0.2f;
+		{
+			
+				life--;
+				transform_.position_.x += 0.2f;
+			
+			
 			
 		}
 		if (life < 0)
 		{
 			life = 120;
-			transform_.position_.z = 0.0f;
+			transform_.position_.x = 0.0f;
+		}
+
+		if (Input::IsKey(DIK_D))
+		{
+			transform_.position_.x += 0.2f;
+		}
+		if (Input::IsKey(DIK_W))
+		{
+			transform_.position_.y += 0.2f;
+		}
+		if (Input::IsKey(DIK_S))
+		{
+			transform_.position_.y -= 0.2f;
+		}
+		if (Input::IsKey(DIK_A))
+		{
+			transform_.position_.x -= 0.2f;
+
 		}
 }
 
@@ -49,3 +70,5 @@ void Bullet::Draw()
 void Bullet::Release()
 {
 }
+
+
