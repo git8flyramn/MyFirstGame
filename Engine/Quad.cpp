@@ -85,11 +85,13 @@ HRESULT Quad::Initialize()
 	}
 
 	pTexture_ = new Texture();
-	pTexture_->Load("Dice1.png");
+	pTexture_->Load("TITLE.png");
 
 	return S_OK;
 }
 
+
+//void Quad::Draw(XMMATRIX& worldMatrix)
 void Quad::Draw(XMMATRIX& worldMatrix)
 {
 	//コンスタントバッファに渡す情報
