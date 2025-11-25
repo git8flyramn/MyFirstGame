@@ -21,12 +21,13 @@ void Player::Initialize()
 	 //pFbx_ = new Fbx;
 	////pFbx_がNullptrじゃなかったら、のチェックをしておくと
 	////良い。
-	 hModel_ = Model::Load("oden.fbx");
+	 hModel_ = Model::Load("Odenkushi.fbx");
 	assert(hModel_ >= 0);
 	//pFbx_->Load("Oden.fbx");
 	transform_.scale_.x = 0.5f;
 	transform_.scale_.y = 0.5f;
 	transform_.scale_.z = 0.5f;
+	transform_.position_.x = -3.0f;
 	//子のオブジェクトにChildOdenを追加する
 	pRChildOden_ = (ChildOden*)Instantiate<ChildOden>(this);
 	pLChildOden_ = (ChildOden*)Instantiate<ChildOden>(this);

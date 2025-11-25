@@ -4,9 +4,9 @@
 #include "Engine/Model.h"
 #include "Player.h"
 Bullet::Bullet(GameObject* parent) 
-	:GameObject(parent, "Bullet"), pFbx(nullptr),isShot(false),life(60)
+	:GameObject(parent, "Bullet"), pFbx(nullptr), isShot(false),life(60)
 {
-
+	
 }
 
 Bullet::~Bullet()
@@ -20,7 +20,7 @@ void Bullet::Initialize()
 	transform_.scale_.y = 0.5f;
 	transform_.scale_.z = 0.5f;
 	pFbx->Load("daikon.fbx");
-    transform_.position_ = { 2.0f,1.0f,0.0f};
+    transform_.position_ = { -1.0f,0.0f,0.0f};
 	SphereCollider* col = new SphereCollider(0.5f);
 	AddCollider(col);
 }
@@ -51,7 +51,10 @@ void Bullet::Update()
 
 void Bullet::Draw()
 {
-	pFbx->Draw(transform_);
+	
+		pFbx->Draw(transform_);
+	
+	
 }
 
 void Bullet::Release()

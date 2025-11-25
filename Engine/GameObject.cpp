@@ -145,6 +145,7 @@ void GameObject::Collision(GameObject* pTarget)
 		         (thisP.z - tgtP.z) * (thisP.z - tgtP.z);
 	if (dist <= thre)
 	{
+
 		MessageBoxA(0, "‚Ô‚Â‚©‚Á‚½", "Collider", MB_OK);
 	}
 }
