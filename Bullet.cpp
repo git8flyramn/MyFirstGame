@@ -28,38 +28,25 @@ void Bullet::Initialize()
 void Bullet::Update()
 {
 	
-		if (Input::IsKey(DIK_SPACE))
-		{
-			
-				life--;
-				transform_.position_.x += 0.2f;
-			
-			
-			
-		}
-		if (life < 0)
-		{
-			life = 120;
-			transform_.position_.x = 0.0f;
-		}
+	if (Input::IsKey(DIK_SPACE))
+	{
+		life--;
+		transform_.position_.x += 0.2f;
+	}
+	if (life < 0)
+	{
+		life = 120;
+		transform_.position_.x = 0.0f;
+	}
+	if (Input::IsKey(DIK_W))
+	{
+		transform_.position_.y += 0.2f;
+	}
+	if (Input::IsKey(DIK_S))
+	{
+		transform_.position_.y -= 0.2f;
+	}
 
-		if (Input::IsKey(DIK_D))
-		{
-			transform_.position_.x += 0.2f;
-		}
-		if (Input::IsKey(DIK_W))
-		{
-			transform_.position_.y += 0.2f;
-		}
-		if (Input::IsKey(DIK_S))
-		{
-			transform_.position_.y -= 0.2f;
-		}
-		if (Input::IsKey(DIK_A))
-		{
-			transform_.position_.x -= 0.2f;
-
-		}
 }
 
 void Bullet::Draw()

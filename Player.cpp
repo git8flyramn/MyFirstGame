@@ -42,30 +42,17 @@ void Player::Update()
 
 	static float x = 0.0;
 	float tx = sin(x) * 5.0f;
-  // 	x += 0.02f;
-	 //transform_.position_.x = tx;
-	 transform_.rotate_.y += 1.0f;
-	 /*if (Input::IsKey(DIK_A))
-	 {
-		 transform_.position_.x += 0.2f;
-	 }*/
-	 if (Input::IsKey(DIK_D))
-	 {
-		 transform_.position_.x += 0.2f;
-	 }
-	 if (Input::IsKey(DIK_W))
-	 {
-		 transform_.position_.y += 0.2f;
-	 }
-	 if (Input::IsKey(DIK_S))
-	 {
-		 transform_.position_.y -= 0.2f;
-	 }
-	 if (Input::IsKey(DIK_A))
-	 {
-		 transform_.position_.x -= 0.2f;
-
-	 }
+	// 	x += 0.02f;
+	   //transform_.position_.x = tx;
+	transform_.rotate_.y += 1.0f;
+	if (Input::IsKey(DIK_W))
+	{
+		transform_.position_.y += 0.2f;
+	}
+	if (Input::IsKey(DIK_S))
+	{
+		transform_.position_.y -= 0.2f;
+	}
 	//if (transform_.rotate_.y > 720.0f)
 	//{
 	//	//KillMe();

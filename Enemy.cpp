@@ -14,7 +14,7 @@ void Enemy::Update()
 	static float y = 0.0f;
 	float ty = sin(y) * 5.0f;
 	//y += 0.02f;
-	transform_.position_.y = ty;
+	//transform_.position_.y = ty;
 }
 
 void Enemy::Initialize()
