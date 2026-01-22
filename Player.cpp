@@ -21,18 +21,19 @@ void Player::Initialize()
 	 //pFbx_ = new Fbx;
 	////pFbx_がNullptrじゃなかったら、のチェックをしておくと
 	////良い。
+	//ここでドーナツの描画をする
+	//hmodel_ = Model::Load("Dounut.fbx);
 	 hModel_ = Model::Load("Odenkushi.fbx");
 	assert(hModel_ >= 0);
-	//pFbx_->Load("Oden.fbx");
 	transform_.scale_.x = 0.5f;
 	transform_.scale_.y = 0.5f;
 	transform_.scale_.z = 0.5f;
 	transform_.position_.x = -3.0f;
 	//子のオブジェクトにChildOdenを追加する
-	pRChildOden_ = (ChildOden*)Instantiate<ChildOden>(this);
+	/*pRChildOden_ = (ChildOden*)Instantiate<ChildOden>(this);
 	pLChildOden_ = (ChildOden*)Instantiate<ChildOden>(this);
 	pRChildOden_->SetPosition(2.0f, 1.0f, 0.0f);
-	pLChildOden_->SetPosition(-2.0f, 1.0f, 0.0f);
+	pLChildOden_->SetPosition(-2.0f, 1.0f, 0.0f);*/
 	SphereCollider* col = new SphereCollider(0.5f);
 	AddCollider(col);
 

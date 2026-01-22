@@ -19,8 +19,10 @@ void Enemy::Update()
 
 void Enemy::Initialize()
 {
+	//‚±‚±‚Åƒh[ƒiƒc‚ð•`‰æ‚·‚éêŠ‚Ì” ‚Ì•`‰æ
 	pFbx = new Fbx;
 	pFbx->Load("box.fbx");
+  //pFbx->Load("Room.fbx);
 	transform_.scale_.x = 1.0f;
 	transform_.scale_.y = 1.0f;
 	transform_.scale_.z = 1.0f;
