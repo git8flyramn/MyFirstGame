@@ -21,14 +21,14 @@ void Enemy::Initialize()
 {
 	//‚±‚±‚Åƒh[ƒiƒc‚ð•`‰æ‚·‚éêŠ‚Ì” ‚Ì•`‰æ
 	pFbx = new Fbx;
-	pFbx->Load("box.fbx");
+	pFbx->Load("Room.fbx");
   //pFbx->Load("Room.fbx);
-	transform_.scale_.x = 1.0f;
-	transform_.scale_.y = 1.0f;
-	transform_.scale_.z = 1.0f;
-	transform_.position_ = { 5.0f,0.0f,0.0f };
-	SphereCollider* col = new SphereCollider(0.5f);
-	AddCollider(col);
+	transform_.scale_.x = 2.0f;
+	transform_.scale_.y = 2.0f;
+	transform_.scale_.z = 2.0f;
+	transform_.position_ = { 0.0f,0.0f,-3.0f };
+	/*SphereCollider* col = new SphereCollider(0.5f);
+	AddCollider(col);*/
 }
 
 void Enemy::Draw()

@@ -21,8 +21,8 @@ void Bullet::Initialize()
 	transform_.scale_.z = 0.5f;
 	//pFbx->Load("daikon.fbx");
     transform_.position_ = { -1.0f,0.0f,0.0f};
-	SphereCollider* col = new SphereCollider(0.5f);
-	AddCollider(col);
+	/*SphereCollider* col = new SphereCollider(0.5f);
+	AddCollider(col);*/
 }
 
 void Bullet::Update()
