@@ -11,6 +11,9 @@
 #include "Engine/RootJob.h"
 #include "Engine/Model.h"
 #include "Engine/Quad.h"
+#include "imgui/imgui.h"
+#include "imgui/imgui_impl_dx11.h"
+#include "imgui/imgui_impl_win32.h"
 #pragma comment(lib, "winmm.lib")
 
 HWND hWnd = nullptr;
@@ -82,6 +85,14 @@ int APIENTRY wWinMain(_In_ HINSTANCE hInstance,
     {
         return 0;
     }
+
+    //Imgui初期化
+    IMGUI_CHECKVERSION();
+    ImGui::CreateContext();
+    ImGuiIO& io = ImGui::GetIO();
+    ImGui_ImplWin32_Init(hWnd);
+    ImGui_ImplDX11_Init(Direct3D::pDevice,Direct3D::pContext);
+    ImGui::StyleColorsLight();
     Camera::Initialize();
     Input::Initialize(hWnd); //入力の初期化
     HACCEL hAccelTable = LoadAccelerators(hInstance, MAKEINTRESOURCE(IDC_MYFIRSTGAME));
@@ -269,6 +280,9 @@ BOOL InitInstance(HINSTANCE hInstance, int nCmdShow)
     return TRUE;
 }
 
+//ImGuiのメッセージ処理
+extern IMGUI_IMPL_API LRESULT ImGui_ImplWin32_WndProcHandler
+(HWND hWnd, UINT msg, WPARAM wparam, LPARAM lParam);
 //
 //  関数: WndProc(HWND, UINT, WPARAM, LPARAM)
 //
@@ -283,6 +297,8 @@ BOOL InitInstance(HINSTANCE hInstance, int nCmdShow)
 //ウィンドウに送信されたメッセージを処理する関数 メインメッセージループに応じた動きをする
 LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
 {
+    if (ImGui_ImplWin32_WndProcHandler(hWnd, message, wParam, lParam))
+        return true;
     switch (message)
     {
     case WM_COMMAND:

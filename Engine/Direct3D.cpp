@@ -1,6 +1,9 @@
 #include "Direct3D.h"
 #include <d3dcompiler.h>
 #include <DirectXMath.h>
+#include "../imgui/imgui.h"
+#include "../imgui/imgui_impl_dx11.h"
+#include "../imgui/imgui_impl_win32.h"
 namespace Direct3D
 {
 	ID3D11Device* pDevice;		                 //デバイス
@@ -282,17 +285,27 @@ void Direct3D::BeginDraw()
     //画面をクリア
     pContext->ClearRenderTargetView(pRenderTargetView, clearColor);
     pContext->ClearDepthStencilView(pDepthStencilView, D3D11_CLEAR_DEPTH, 1.0f, 0);
+    ImGui_ImplDX11_NewFrame();
+    ImGui_ImplWin32_NewFrame();
+    ImGui::NewFrame();
 
 }
 
 void Direct3D::EndDraw()
 {
+    ImGui::Button("Button");
+    ImGui::Render();
+    ImGui_ImplDX11_RenderDrawData(ImGui::GetDrawData());
     //スワップ（バックバッファを表に表示する）
     pSwapChain->Present(0, 0);
 }
 
 void Direct3D::Release()
 {
+
+    ImGui_ImplDX11_Shutdown();
+    ImGui_ImplWin32_Shutdown();
+    ImGui::DestroyContext();
     SAFE_RELEASE(pRasterizerState);
     SAFE_RELEASE(pVertexLayout);
     SAFE_RELEASE(pPixelShader);
